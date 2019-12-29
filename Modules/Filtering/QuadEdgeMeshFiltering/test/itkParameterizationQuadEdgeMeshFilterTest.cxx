@@ -98,7 +98,7 @@ ParameterizationQuadEdgeMeshFilterTest(int argc, char * argv[])
                 << "1 for DISK BORDER TRANSFORM" << std::endl;
       return EXIT_FAILURE;
   }
-  std::cout << "Transform type is: " << border_transform->GetTransformType();
+  std::cout << "Transform type is: " << itkExposeEnumValue(border_transform->GetTransformType());
   std::cout << std::endl;
 
   // ** CHOOSE AND SET BARYCENTRIC WEIGHTS **

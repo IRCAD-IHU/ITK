@@ -55,23 +55,23 @@ void
 TIFFImageIO::ReadGenericImage(void * out, unsigned int width, unsigned int height)
 {
 
-  if (m_ComponentType == UCHAR)
+  if (m_ComponentType == IOComponentEnum::UCHAR)
   {
     this->ReadGenericImage<unsigned char>(out, width, height);
   }
-  else if (m_ComponentType == CHAR)
+  else if (m_ComponentType == IOComponentEnum::CHAR)
   {
     this->ReadGenericImage<char>(out, width, height);
   }
-  else if (m_ComponentType == USHORT)
+  else if (m_ComponentType == IOComponentEnum::USHORT)
   {
     this->ReadGenericImage<unsigned short>(out, width, height);
   }
-  else if (m_ComponentType == SHORT)
+  else if (m_ComponentType == IOComponentEnum::SHORT)
   {
     this->ReadGenericImage<short>(out, width, height);
   }
-  else if (m_ComponentType == FLOAT)
+  else if (m_ComponentType == IOComponentEnum::FLOAT)
   {
     this->ReadGenericImage<float>(out, width, height);
   }
@@ -212,7 +212,7 @@ TIFFImageIO::TIFFImageIO()
   this->Self::SetCompressor("");
 
   m_ComponentType = UCHAR;
-  m_PixelType = SCALAR;
+  m_PixelType = IOPixelEnum::SCALAR;
 
   m_ColorRed = nullptr;
   m_ColorGreen = nullptr;
@@ -404,18 +404,18 @@ TIFFImageIO::ReadImageInformation()
   {
     if (m_InternalImage->m_SampleFormat == 3)
     {
-      m_ComponentType = FLOAT;
+      m_ComponentType = IOComponentEnum::FLOAT;
     }
   }
   else
   {
     if (m_InternalImage->m_SampleFormat == 2)
     {
-      m_ComponentType = SHORT;
+      m_ComponentType = IOComponentEnum::SHORT;
     }
     else
     {
-      m_ComponentType = USHORT;
+      m_ComponentType = IOComponentEnum::USHORT;
     }
   }
 
@@ -425,23 +425,23 @@ TIFFImageIO::ReadImageInformation()
     case TIFFImageIO::PALETTE_GRAYSCALE:
     case TIFFImageIO::GRAYSCALE:
       this->SetNumberOfComponents(1);
-      this->SetPixelType(SCALAR);
+      this->SetPixelType(IOPixelEnum::SCALAR);
       break;
     case TIFFImageIO::RGB_:
       this->SetNumberOfComponents(m_InternalImage->m_SamplesPerPixel);
-      this->SetPixelType(RGB);
+      this->SetPixelType(IOPixelEnum::RGB);
       break;
     case TIFFImageIO::PALETTE_RGB:
     {
       if (this->GetExpandRGBPalette())
       {
         this->SetNumberOfComponents(3);
-        this->SetPixelType(RGB);
+        this->SetPixelType(IOPixelEnum::RGB);
       }
       else
       {
         this->SetNumberOfComponents(1);
-        this->SetPixelType(SCALAR);
+        this->SetPixelType(IOPixelEnum::SCALAR);
         m_IsReadAsScalarPlusPalette = true;
       }
       break;
@@ -449,7 +449,7 @@ TIFFImageIO::ReadImageInformation()
     default:
       // CanRead should be false
       this->SetNumberOfComponents(4);
-      this->SetPixelType(RGBA);
+      this->SetPixelType(IOPixelEnum::RGBA);
   }
 
   bool isPalette =
@@ -500,7 +500,7 @@ TIFFImageIO::ReadImageInformation()
     {
       itkDebugMacro(<< "Using TIFFReadRGBAImage");
       this->SetNumberOfComponents(4);
-      this->SetPixelType(RGBA);
+      this->SetPixelType(IOPixelEnum::RGBA);
       m_ComponentType = UCHAR;
     }
     else
@@ -510,7 +510,7 @@ TIFFImageIO::ReadImageInformation()
       // can't read as scalar+palette so reset type to RGB
       m_IsReadAsScalarPlusPalette = false;
       this->SetNumberOfComponents(3);
-      this->SetPixelType(RGB); // RGBA is not valid for palette, so cannot be
+      this->SetPixelType(IOPixelEnum::RGB); // RGBA is not valid for palette, so cannot be
       m_ComponentType = (isPaletteShortType) ? USHORT : UCHAR;
     }
   }
@@ -576,19 +576,19 @@ TIFFImageIO::InternalWrite(const void * buffer)
 
   switch (this->GetComponentType())
   {
-    case UCHAR:
+    case IOComponentEnum::UCHAR:
       bps = 8;
       break;
-    case CHAR:
+    case IOComponentEnum::CHAR:
       bps = 8;
       break;
-    case USHORT:
+    case IOComponentEnum::USHORT:
       bps = 16;
       break;
-    case SHORT:
+    case IOComponentEnum::SHORT:
       bps = 16;
       break;
-    case FLOAT:
+    case IOComponentEnum::FLOAT:
       bps = 32;
       break;
     default:
@@ -789,19 +789,19 @@ TIFFImageIO::InternalWrite(const void * buffer)
 
     switch (this->GetComponentType())
     {
-      case UCHAR:
+      case IOComponentEnum::UCHAR:
         rowLength = sizeof(unsigned char);
         break;
-      case USHORT:
+      case IOComponentEnum::USHORT:
         rowLength = sizeof(unsigned short);
         break;
-      case CHAR:
+      case IOComponentEnum::CHAR:
         rowLength = sizeof(char);
         break;
-      case SHORT:
+      case IOComponentEnum::SHORT:
         rowLength = sizeof(short);
         break;
-      case FLOAT:
+      case IOComponentEnum::FLOAT:
         rowLength = sizeof(float);
         break;
       default:

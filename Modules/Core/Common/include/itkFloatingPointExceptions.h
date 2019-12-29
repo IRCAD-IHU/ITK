@@ -35,8 +35,20 @@ struct ExceptionGlobals;
 class ITKCommon_EXPORT FloatingPointExceptions
 {
 public:
-  /** defines what should happen when exceptions occur */
-  using ExceptionAction = enum { ABORT, EXIT };
+  /**\class ExceptionActionEnum
+   * defines what should happen when exceptions occur */
+  enum class ExceptionActionEnum : u_int8_t
+  {
+    ABORT,
+    EXIT
+  };
+
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enum values at class level for backwards compatibility*/
+  using ExceptionAction = ExceptionActionEnum;
+  static constexpr ExceptionActionEnum ABORT = ExceptionActionEnum::ABORT;
+  static constexpr ExceptionActionEnum EXIT = ExceptionActionEnum::EXIT;
+#endif
 
   /** Enable floating point exceptions.
    *
@@ -72,10 +84,10 @@ public:
 
   /** Control whether exit(255) or abort() is called on an exception */
   static void
-  SetExceptionAction(ExceptionAction a);
+  SetExceptionAction(ExceptionActionEnum a);
 
   /** Access current ExceptionAction */
-  static ExceptionAction
+  static ExceptionActionEnum
   GetExceptionAction();
 
   /** Return if floating point exceptions are supported on this platform */

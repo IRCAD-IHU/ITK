@@ -217,21 +217,24 @@ itkHistogramToTextureFeaturesFilterTest(int, char *[])
   }
 
   // Get the texture features using GetFeature() method
-  double energy2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::Energy);
+  double energy2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::TextureFeatureEnum::Energy);
 
-  double entropy2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::Entropy);
+  double entropy2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::TextureFeatureEnum::Entropy);
 
-  double correlation2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::Correlation);
+  double correlation2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::TextureFeatureEnum::Correlation);
 
-  double inverseDifferenceMoment2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::InverseDifferenceMoment);
+  double inverseDifferenceMoment2 =
+    filter->GetFeature(HistogramToTextureFeaturesFilterType::TextureFeatureEnum::InverseDifferenceMoment);
 
-  double inertia2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::Inertia);
+  double inertia2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::TextureFeatureEnum::Inertia);
 
-  double clusterShade2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::ClusterShade);
+  double clusterShade2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::TextureFeatureEnum::ClusterShade);
 
-  double clusterProminence2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::ClusterProminence);
+  double clusterProminence2 =
+    filter->GetFeature(HistogramToTextureFeaturesFilterType::TextureFeatureEnum::ClusterProminence);
 
-  double haralickCorrelation2 = filter->GetFeature(HistogramToTextureFeaturesFilterType::HaralickCorrelation);
+  double haralickCorrelation2 =
+    filter->GetFeature(HistogramToTextureFeaturesFilterType::TextureFeatureEnum::HaralickCorrelation);
 
   if (itk::Math::abs(energy2 - trueEnergy) > 0.001)
   {

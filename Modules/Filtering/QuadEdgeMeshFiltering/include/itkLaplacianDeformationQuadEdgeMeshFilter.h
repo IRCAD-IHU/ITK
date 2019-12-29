@@ -159,17 +159,25 @@ public:
   itkSetMacro(Order, unsigned int);
   itkGetMacro(Order, unsigned int);
 
-  enum AreaType
+  /**\class AreaEnum
+   * \ingroup ITKQuadEdgeMeshFiltering
+   * Type of area*/
+  enum class AreaEnum : u_int8_t
   {
     /** Do not use any area information*/
     NONE = 0,
     /** Use a mixed area*/
     MIXEDAREA
   };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr AreaEnum NONE = AreaEnum::NONE;
+  static constexpr AreaEnum MIXEDAREA = AreaEnum::MIXEDAREA;
+#endif
 
   /** Set/Get the area normalization type */
-  itkSetMacro(AreaComputationType, AreaType);
-  itkGetMacro(AreaComputationType, AreaType);
+  itkSetEnumMacro(AreaComputationType, AreaEnum);
+  itkGetMacro(AreaComputationType, AreaEnum);
 
 #ifdef ITK_USE_CONCEPT_CHECKING
   itkConceptMacro(SameDimensionCheck1, (Concept::SameDimension<InputPointDimension, OutputPointDimension>));
@@ -215,7 +223,7 @@ protected:
   CoefficientsComputationType * m_CoefficientsMethod;
 
   unsigned int m_Order{ 1 };
-  AreaType     m_AreaComputationType;
+  AreaEnum     m_AreaComputationType;
 
   void
   PrintSelf(std::ostream & os, Indent indent) const override;

@@ -69,7 +69,7 @@ public:
   using PointType = typename Superclass::PointType;
   using PointsContainer = typename Superclass::PointsContainer;
   using UsingCellsContainer = typename Superclass::UsingCellsContainer;
-  using CellGeometry = typename Superclass::CellGeometry;
+  using CellGeometryEnum = typename Superclass::CellGeometryEnum;
   using ParametricCoordArrayType = typename Superclass::ParametricCoordArrayType;
   using ShapeFunctionsArrayType = typename Superclass::ShapeFunctionsArrayType;
   static constexpr unsigned int PointDimension = Superclass::PointDimension;
@@ -119,12 +119,15 @@ public:
   void
   Accept(CellIdentifier cellId, MultiVisitor * mv) override;
 
-  CellGeometry
+  CellGeometryEnum
   GetType() const override;
 
   /** Topology related methods. */
-  static int
-  GetTopologyId();
+  static constexpr CellGeometryEnum
+  GetTopologyId()
+  {
+    return CellGeometryEnum::LINE_CELL;
+  }
 
   unsigned int
   GetDimension() const override;

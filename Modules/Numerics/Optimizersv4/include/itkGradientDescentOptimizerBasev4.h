@@ -51,8 +51,10 @@ public:
   /** Run-time type information (and related methods). */
   itkTypeMacro(GradientDescentOptimizerBasev4Template, Superclass);
 
-  /** Codes of stopping conditions. */
-  typedef enum
+  /**\class StopConditionEnum
+   * \ingroup ITKOptimizersv4
+   * Codes of stopping conditions. */
+  enum class StopConditionEnum : u_int8_t
   {
     MAXIMUM_NUMBER_OF_ITERATIONS,
     COSTFUNCTION_ERROR,
@@ -61,7 +63,17 @@ public:
     CONVERGENCE_CHECKER_PASSED,
     GRADIENT_MAGNITUDE_TOLEARANCE,
     OTHER_ERROR
-  } StopConditionEnum;
+  };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr StopConditionEnum MAXIMUM_NUMBER_OF_ITERATIONS = StopConditionEnum::MAXIMUM_NUMBER_OF_ITERATIONS;
+  static constexpr StopConditionEnum COSTFUNCTION_ERROR = StopConditionEnum::COSTFUNCTION_ERROR;
+  static constexpr StopConditionEnum UPDATE_PARAMETERS_ERROR = StopConditionEnum::UPDATE_PARAMETERS_ERROR;
+  static constexpr StopConditionEnum STEP_TOO_SMALL = StopConditionEnum::STEP_TOO_SMALL;
+  static constexpr StopConditionEnum CONVERGENCE_CHECKER_PASSED = StopConditionEnum::CONVERGENCE_CHECKER_PASSED;
+  static constexpr StopConditionEnum GRADIENT_MAGNITUDE_TOLEARANCE = StopConditionEnum::GRADIENT_MAGNITUDE_TOLEARANCE;
+  static constexpr StopConditionEnum OTHER_ERROR = StopConditionEnum::OTHER_ERROR;
+#endif
 
   /** Stop condition return string type */
   using StopConditionReturnStringType = typename Superclass::StopConditionReturnStringType;

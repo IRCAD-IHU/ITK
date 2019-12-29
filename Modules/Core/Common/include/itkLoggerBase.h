@@ -82,12 +82,20 @@ public:
   itkSetStringMacro(Name);
   itkGetStringMacro(Name);
 
-  /** Select the type of format for reporting time stamps */
-  typedef enum
+  /**\class TimeStampFormatEnum
+   * \ingroup ITKCommon
+   * Select the type of format for reporting time stamps */
+  enum class TimeStampFormatEnum : u_int8_t
   {
     REALVALUE = 0,
-    HUMANREADABLE
-  } TimeStampFormatType;
+    HUMANREADABLE = 1
+  };
+#if !defined(ITK_LEGACY_REMOVE)
+  // We need to expose the enum values at the class level
+  // for backwards compatibility
+  static constexpr TimeStampFormatEnum REALVALUE = TimeStampFormatEnum::REALVALUE;
+  static constexpr TimeStampFormatEnum HUMANREADABLE = TimeStampFormatEnum::HUMANREADABLE;
+#endif
 
   /** Set/Get the type of format used for reporting the time stamp of a given
    * log message. The main options are REALVALUE and HUMANREADABLE.
@@ -98,8 +106,8 @@ public:
    * \sa SetHumanReadableFormat()
    *
    */
-  itkSetMacro(TimeStampFormat, TimeStampFormatType);
-  itkGetConstReferenceMacro(TimeStampFormat, TimeStampFormatType);
+  itkSetEnumMacro(TimeStampFormat, TimeStampFormatEnum);
+  itkGetConstReferenceMacro(TimeStampFormat, TimeStampFormatEnum);
 
   /** Set/Get the specific text format to use when the time stamp format type
    * is set to HUMANREADABLE. For a description of the acceptable formats
@@ -213,7 +221,7 @@ protected:
 
   RealTimeClock::Pointer m_Clock;
 
-  TimeStampFormatType m_TimeStampFormat;
+  TimeStampFormatEnum m_TimeStampFormat;
 
   std::string m_HumanReadableFormat;
 

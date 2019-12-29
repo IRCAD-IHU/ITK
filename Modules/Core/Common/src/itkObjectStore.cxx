@@ -31,7 +31,7 @@ operator<<(std::ostream & out, const StrategyForGrowthType value)
       case StrategyForGrowthType::EXPONENTIAL_GROWTH:
         return "StrategyForGrowthType::EXPONENTIAL_GROWTH";
       default:
-        return "INVALID VALUE FOR ObjectStore<TObjectType>::GrowthStrategyType";
+        return "INVALID VALUE FOR ObjectStore<TObjectType>::GrowthStrategyEnum";
     }
   }();
 }

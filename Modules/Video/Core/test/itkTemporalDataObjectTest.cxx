@@ -85,7 +85,8 @@ itkTemporalDataObjectTest(int, char *[])
   ITK_CHECK_FOR_VALUE(tdo->GetRequestedTemporalRegion(), regionRequested);
   ITK_CHECK_FOR_VALUE(tdo->GetBufferedTemporalRegion(), regionBuffered);
 
-  CHECK_FOR_VALUE(tdo->GetTemporalUnit(), itk::TemporalDataObject::Frame);
+  CHECK_FOR_VALUE(itkExposeEnumValue(tdo->GetTemporalUnit()),
+                  itkExposeEnumValue(itk::TemporalDataObject::TemporalUnitType::Frame));
   CHECK_FOR_VALUE(tdo->VerifyRequestedRegion(), true);
   CHECK_FOR_VALUE(tdo->RequestedRegionIsOutsideOfTheBufferedRegion(), false);
 

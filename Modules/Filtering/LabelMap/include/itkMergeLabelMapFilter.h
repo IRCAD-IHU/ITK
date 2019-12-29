@@ -38,6 +38,19 @@ enum class ChoiceMethodEnum : uint8_t
   PACK = 2,
   STRICT = 3
 };
+
+
+#if !defined(ITK_LEGACY_REMOVE)
+/** Enables backwards compatibility for enum values */
+using ChoiceMethod = ChoiceMethodEnum;
+// We need to expose the enum values at the class level
+// for backwards compatibility
+static constexpr ChoiceMethodEnum KEEP = ChoiceMethodEnum::KEEP;
+static constexpr ChoiceMethodEnum AGGREGATE = ChoiceMethodEnum::AGGREGATE;
+static constexpr ChoiceMethodEnum PACK = ChoiceMethodEnum::PACK;
+static constexpr ChoiceMethodEnum STRICT = ChoiceMethodEnum::STRICT;
+#endif
+
 #ifdef TEMPINPLACELABELMAPSTRICT
 #  define STRICT TEMPINPLACELABELMAPSTRICT
 #  undef TEMPINPLACELABELMAPSTRICT
@@ -103,6 +116,11 @@ public:
   /** Runtime information support. */
   itkTypeMacro(MergeLabelMapFilter, InPlaceLabelMapFilter);
 
+#if !defined(ITK_LEGACY_REMOVE)
+  /** Enables backwards compatibility for enum values */
+  using MethodChoice = ChoiceMethodEnum;
+#endif
+
 #ifdef ITK_USE_CONCEPT_CHECKING
   // Begin concept checking
 /*  itkConceptMacro(InputEqualityComparableCheck,
@@ -118,20 +136,9 @@ public:
 #  undef STRICT
 #endif
 
-  /** Enables backwards compatibility for enum values */
-  using MethodChoice = ChoiceMethodEnum;
-#if !defined(ITK_LEGACY_REMOVE)
-  // We need to expose the enum values at the class level
-  // for backwards compatibility
-  static constexpr MethodChoice KEEP = MethodChoice::KEEP;
-  static constexpr MethodChoice AGGREGATE = MethodChoice::AGGREGATE;
-  static constexpr MethodChoice PACK = MethodChoice::PACK;
-  static constexpr MethodChoice STRICT = MethodChoice::STRICT;
-#endif
-
   /** Set/Get the method used to merge the label maps */
-  itkSetMacro(Method, MethodChoice);
-  itkGetConstReferenceMacro(Method, MethodChoice);
+  itkSetMacro(Method, ChoiceMethodEnum);
+  itkGetConstReferenceMacro(Method, ChoiceMethodEnum);
 
 protected:
   MergeLabelMapFilter();
@@ -143,7 +150,7 @@ protected:
   void
   PrintSelf(std::ostream & os, Indent indent) const override;
 
-  MethodChoice m_Method;
+  ChoiceMethodEnum m_Method;
 
 private:
   void

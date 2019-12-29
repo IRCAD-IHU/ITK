@@ -75,7 +75,7 @@ public:
    * and to determine what kind of file it is (Analyze vs NIfTI). Note that the value
    * of LegacyAnalyze75Mode is ignored by this method.
    * \param FileNameToRead The name of the file to test for reading.
-   * \return Returns one of the FileType enumerations.
+   * \return Returns one of the FileEnum enumerations.
    */
   FileType
   DetermineFileType(const char * FileNameToRead);
@@ -186,7 +186,7 @@ private:
   double m_RescaleSlope{ 1.0 };
   double m_RescaleIntercept{ 0.0 };
 
-  IOComponentType m_OnDiskComponentType{ UNKNOWNCOMPONENTTYPE };
+  IOComponentEnum m_OnDiskComponentType{ IOComponentEnum::UNKNOWNCOMPONENTTYPE };
 
   bool m_LegacyAnalyze75Mode{ true };
 };

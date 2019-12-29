@@ -26,7 +26,7 @@
 namespace itk
 {
 
-/** \class GrowthStrategyType
+/** \class GrowthStrategyEnum
  * \ingroup ITKCommon
  * Type of memory allocation strategy */
 enum class StrategyForGrowthType : uint8_t
@@ -93,13 +93,20 @@ public:
   /** Type of list for storing pointers to free memory. */
   using FreeListType = std::vector<ObjectType *>;
 
-  /** Type of memory allocation strategy */
-  typedef enum
+  /**\class GrowthStrategyEnum
+   * \ingroup ITKCommon
+   * Type of memory allocation strategy */
+  enum class GrowthStrategyEnum : u_int8_t
   {
     LINEAR_GROWTH = 0,
     EXPONENTIAL_GROWTH = 1
-  } GrowthStrategyType;
-
+  };
+#if !defined(ITK_LEGACY_REMOVE)
+  // We need to expose the enum values at the class level
+  // for backwards compatibility
+  static constexpr GrowthStrategyEnum LINEAR_GROWTH = GrowthStrategyEnum::LINEAR_GROWTH;
+  static constexpr GrowthStrategyEnum EXPONENTIAL_GROWTH = GrowthStrategyEnum::EXPONENTIAL_GROWTH;
+#endif
   /** Borrow a pointer to an object from the memory store. */
   ObjectType *
   Borrow();
@@ -134,21 +141,21 @@ public:
   itkGetConstMacro(LinearGrowthSize, SizeValueType);
 
   /** Set/Get the growth strategy. */
-  itkSetMacro(GrowthStrategy, GrowthStrategyType);
-  itkGetConstMacro(GrowthStrategy, GrowthStrategyType);
+  itkSetEnumMacro(GrowthStrategy, GrowthStrategyEnum);
+  itkGetConstMacro(GrowthStrategy, GrowthStrategyEnum);
 
   /** Set growth strategy to exponential */
   void
   SetGrowthStrategyToExponential()
   {
-    this->SetGrowthStrategy(EXPONENTIAL_GROWTH);
+    this->SetGrowthStrategy(GrowthStrategyEnum::EXPONENTIAL_GROWTH);
   }
 
   /** Set growth strategy to linear */
   void
   SetGrowthStrategyToLinear()
   {
-    this->SetGrowthStrategy(LINEAR_GROWTH);
+    this->SetGrowthStrategy(GrowthStrategyEnum::LINEAR_GROWTH);
   }
 
 protected:
@@ -186,7 +193,7 @@ protected:
   };
 
 private:
-  GrowthStrategyType m_GrowthStrategy;
+  GrowthStrategyEnum m_GrowthStrategy;
 
   SizeValueType m_Size;
   SizeValueType m_LinearGrowthSize;

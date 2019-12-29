@@ -203,7 +203,7 @@ itkFastMarchingUpwindGradientBaseTest(int, char *[])
   criterion->SetTargetNodes(TargetNodes);
 
   // Stop the algorithm when ONE of the targets has been reached.
-  criterion->SetTargetCondition(CriterionType::OneTarget);
+  criterion->SetTargetCondition(CriterionType::TargetConditionEnum::OneTarget);
 
   marcher->SetStoppingCriterion(criterion);
 

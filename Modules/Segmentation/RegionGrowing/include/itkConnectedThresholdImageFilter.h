@@ -132,19 +132,26 @@ public:
   // End concept checking
 #endif
 
-  /** Face connectivity is 4 connected in 2D, 6  connected in 3D, 2*n   in ND
+  /**\class TemporalUnitEnum
+   * \ingroup RegionGrowingSegmentation
+   * Face connectivity is 4 connected in 2D, 6  connected in 3D, 2*n   in ND
    *  Full connectivity is 8 connected in 2D, 26 connected in 3D, 3^n-1 in ND
    *  Default is to use FaceConnectivity. */
-  typedef enum
+  enum class ConnectivityEnum : uint8_t
   {
     FaceConnectivity,
     FullConnectivity
-  } ConnectivityEnumType;
+  };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr ConnectivityEnum FaceConnectivity = ConnectivityEnum::FaceConnectivity;
+  static constexpr ConnectivityEnum FullConnectivity = ConnectivityEnum::FullConnectivity;
+#endif
 
   /** Type of connectivity to use (fully connected OR 4(2D), 6(3D),
    * 2*N(ND) connectivity). */
-  itkSetEnumMacro(Connectivity, ConnectivityEnumType);
-  itkGetEnumMacro(Connectivity, ConnectivityEnumType);
+  itkSetEnumMacro(Connectivity, ConnectivityEnum);
+  itkGetEnumMacro(Connectivity, ConnectivityEnum);
 
 protected:
   ConnectedThresholdImageFilter();
@@ -166,7 +173,7 @@ private:
 
   OutputImagePixelType m_ReplaceValue;
 
-  ConnectivityEnumType m_Connectivity;
+  ConnectivityEnum m_Connectivity;
 };
 } // end namespace itk
 

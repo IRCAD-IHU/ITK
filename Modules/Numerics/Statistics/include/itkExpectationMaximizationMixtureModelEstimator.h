@@ -159,15 +159,22 @@ public:
   void
   Update();
 
-  /** Termination status after running optimization */
-  enum TERMINATION_CODE
+  /**\class TERMINATION_CODE_ENUM
+   * \ingroup ITKStatistics
+   * Termination status after running optimization */
+  enum class TERMINATION_CODE_ENUM : u_int8_t
   {
     CONVERGED = 0,
     NOT_CONVERGED = 1
   };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr TERMINATION_CODE_ENUM CONVERGED = TERMINATION_CODE_ENUM::CONVERGED;
+  static constexpr TERMINATION_CODE_ENUM NOT_CONVERGED = TERMINATION_CODE_ENUM::NOT_CONVERGED;
+#endif
 
   /** Gets the termination status */
-  TERMINATION_CODE
+  TERMINATION_CODE_ENUM
   GetTerminationCode() const;
 
   /** Gets the membership function specified by componentIndex
@@ -209,10 +216,10 @@ private:
   int m_MaxIteration{ 100 };
   int m_CurrentIteration{ 0 };
 
-  TERMINATION_CODE     m_TerminationCode;
-  ComponentVectorType  m_ComponentVector;
-  ProportionVectorType m_InitialProportions;
-  ProportionVectorType m_Proportions;
+  TERMINATION_CODE_ENUM m_TerminationCode;
+  ComponentVectorType   m_ComponentVector;
+  ProportionVectorType  m_InitialProportions;
+  ProportionVectorType  m_Proportions;
 
   MembershipFunctionVectorObjectPointer  m_MembershipFunctionsObject;
   MembershipFunctionsWeightsArrayPointer m_MembershipFunctionsWeightArrayObject;

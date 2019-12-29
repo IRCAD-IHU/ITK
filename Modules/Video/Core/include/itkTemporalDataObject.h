@@ -54,13 +54,24 @@ public:
   using BufferType = RingBuffer<DataObject>;
   using TemporalRegionType = TemporalRegion;
 
-  /** Enum for defining the way in which to compare temporal regions */
-  typedef enum
+  /** \class TemporalUnitEnum
+   * \brief For defining the way in which to compare temporal regions.
+   *
+   * \ingroup ITKVideoCore */
+  enum class TemporalUnitEnum : uint8_t
   {
     Frame,
     RealTime,
     FrameAndRealTime
-  } TemporalUnitType;
+  };
+  using TemporalUnitType = TemporalUnitEnum;
+
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr TemporalUnitEnum Frame = TemporalUnitEnum::Frame;
+  static constexpr TemporalUnitEnum RealTime = TemporalUnitEnum::RealTime;
+  static constexpr TemporalUnitEnum FrameAndRealTime = TemporalUnitEnum::FrameAndRealTime;
+#endif
 
   itkNewMacro(Self);
 
@@ -136,7 +147,7 @@ protected:
   TemporalRegionType m_RequestedTemporalRegion;
   TemporalRegionType m_BufferedTemporalRegion;
 
-  TemporalUnitType m_TemporalUnit{ Frame };
+  TemporalUnitEnum m_TemporalUnit{ TemporalUnitEnum::Frame };
 }; // end class TemporalDataObject
 
 } // end namespace itk

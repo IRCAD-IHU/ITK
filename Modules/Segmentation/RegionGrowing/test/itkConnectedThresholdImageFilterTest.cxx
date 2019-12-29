@@ -108,11 +108,12 @@ itkConnectedThresholdImageFilterTest(int argc, char * argv[])
   // Test the use of full (8 connectivity in 2D) on this image
   if (argc > 7)
   {
-    ConnectedThresholdImageFilterType::ConnectivityEnumType conenctivity =
+    ConnectedThresholdImageFilterType::ConnectivityEnum conenctivity =
       std::stoi(argv[7]) ? ConnectedThresholdImageFilterType::FullConnectivity
                          : ConnectedThresholdImageFilterType::FaceConnectivity;
     connectedThresholdFilter->SetConnectivity(conenctivity);
-    ITK_TEST_SET_GET_VALUE(conenctivity, connectedThresholdFilter->GetConnectivity());
+    ITK_TEST_SET_GET_VALUE(itkExposeEnumValue(conenctivity),
+                           itkExposeEnumValue(connectedThresholdFilter->GetConnectivity()));
   }
 
   connectedThresholdFilter->SetInput(imageReader->GetOutput());

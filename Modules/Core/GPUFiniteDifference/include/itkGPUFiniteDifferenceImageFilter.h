@@ -100,11 +100,10 @@ public:
     }
   }
 
+#if !defined(ITK_LEGACY_REMOVE)
   /** Enables backwards compatibility for enum values */
   using FilterStateType = GPUFiniteDifferenceFilterEnum;
-#if !defined(ITK_LEGACY_REMOVE)
-  // We need to expose the enum values at the class level
-  // for backwards compatibility
+  // We need to expose the enum values at the class level for backwards compatibility
   static constexpr FilterStateType UNINITIALIZED = FilterStateType::UNINITIALIZED;
   static constexpr FilterStateType INITIALIZED = FilterStateType::INITIALIZED;
 #endif

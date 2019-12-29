@@ -170,7 +170,7 @@ itkLBFGS2Optimizerv4Test(int, char *[])
   itkOptimizer->SetDeltaConvergenceDistance(0);
   itkOptimizer->SetDeltaConvergenceTolerance(0);
   itkOptimizer->SetMaximumIterations(0);
-  itkOptimizer->SetLineSearch(OptimizerType::LINESEARCH_DEFAULT);
+  itkOptimizer->SetLineSearch(OptimizerType::LineSearchMethodEnum::LINESEARCH_DEFAULT);
   itkOptimizer->SetMaximumLineSearchEvaluations(20);
   itkOptimizer->SetMinimumLineSearchStep(1e-20);
   itkOptimizer->SetMaximumLineSearchStep(1e+20);

@@ -87,7 +87,7 @@ itkBorderQuadEdgeMeshFilterTest(int argc, char * argv[])
       std::cerr << "0 for SQUARE BORDER TRANSFORM or 1 for DISK BORDER TRANSFORM" << std::endl;
       return EXIT_FAILURE;
   }
-  std::cout << "Transform type is: " << border_transform->GetTransformType();
+  std::cout << "Transform type is: " << itkExposeEnumValue(border_transform->GetTransformType());
   std::cout << std::endl;
 
   int pick = std::stoi(argv[3]);
@@ -104,7 +104,7 @@ itkBorderQuadEdgeMeshFilterTest(int argc, char * argv[])
       std::cerr << "0 for LONGEST BORDER or 1 for LARGEST BORDER" << std::endl;
       return EXIT_FAILURE;
   }
-  std::cout << "Border picked is: " << border_transform->GetBorderPick();
+  std::cout << "Border picked is: " << itkExposeEnumValue(border_transform->GetBorderPick());
   std::cout << std::endl;
 
   MeshType::Pointer output = border_transform->GetOutput();

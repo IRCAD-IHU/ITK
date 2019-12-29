@@ -138,10 +138,10 @@ MeshFileReader<TOutputMesh, ConvertPointPixelTraits, ConvertCellPixelTraits>::Re
   OutputCellIdentifier id = NumericTraits<OutputCellIdentifier>::ZeroValue();
   while (index < m_MeshIO->GetCellBufferSize())
   {
-    auto type = static_cast<MeshIOBase::CellGeometryType>(static_cast<int>(buffer[index++]));
+    auto type = static_cast<MeshIOBase::CellGeometryEnum>(static_cast<int>(buffer[index++]));
     switch (type)
     {
-      case MeshIOBase::VERTEX_CELL:
+      case MeshIOBase::CellGeometryEnum::VERTEX_CELL:
       {
         auto numberOfPoints = static_cast<unsigned int>(buffer[index++]);
         if (numberOfPoints != OutputVertexCellType::NumberOfPoints)
@@ -159,7 +159,7 @@ MeshFileReader<TOutputMesh, ConvertPointPixelTraits, ConvertCellPixelTraits>::Re
         output->SetCell(id++, cell);
         break;
       }
-      case MeshIOBase::LINE_CELL:
+      case MeshIOBase::CellGeometryEnum::LINE_CELL:
       {
         // for polylines will be loaded as individual edges.
         auto numberOfPoints = static_cast<unsigned int>(buffer[index++]);
@@ -180,7 +180,7 @@ MeshFileReader<TOutputMesh, ConvertPointPixelTraits, ConvertCellPixelTraits>::Re
         }
         break;
       }
-      case MeshIOBase::TRIANGLE_CELL:
+      case MeshIOBase::CellGeometryEnum::TRIANGLE_CELL:
       {
         auto numberOfPoints = static_cast<unsigned int>(buffer[index++]);
         if (numberOfPoints != OutputTriangleCellType::NumberOfPoints)
@@ -199,7 +199,7 @@ MeshFileReader<TOutputMesh, ConvertPointPixelTraits, ConvertCellPixelTraits>::Re
         output->SetCell(id++, cell);
         break;
       }
-      case MeshIOBase::QUADRILATERAL_CELL:
+      case MeshIOBase::CellGeometryEnum::QUADRILATERAL_CELL:
       {
         auto numberOfPoints = static_cast<unsigned int>(buffer[index++]);
         if (numberOfPoints != OutputQuadrilateralCellType::NumberOfPoints)
@@ -218,7 +218,7 @@ MeshFileReader<TOutputMesh, ConvertPointPixelTraits, ConvertCellPixelTraits>::Re
         output->SetCell(id++, cell);
         break;
       }
-      case MeshIOBase::POLYGON_CELL:
+      case MeshIOBase::CellGeometryEnum::POLYGON_CELL:
       {
         // For polyhedron, if the number of points is 3, then we treat it as
         // triangle cell
@@ -246,7 +246,7 @@ MeshFileReader<TOutputMesh, ConvertPointPixelTraits, ConvertCellPixelTraits>::Re
         output->SetCell(id++, cell);
         break;
       }
-      case MeshIOBase::TETRAHEDRON_CELL:
+      case MeshIOBase::CellGeometryEnum::TETRAHEDRON_CELL:
       {
         auto numberOfPoints = static_cast<unsigned int>(buffer[index++]);
         if (numberOfPoints != OutputTetrahedronCellType::NumberOfPoints)
@@ -265,7 +265,7 @@ MeshFileReader<TOutputMesh, ConvertPointPixelTraits, ConvertCellPixelTraits>::Re
         output->SetCell(id++, cell);
         break;
       }
-      case MeshIOBase::HEXAHEDRON_CELL:
+      case MeshIOBase::CellGeometryEnum::HEXAHEDRON_CELL:
       {
         auto numberOfPoints = static_cast<unsigned int>(buffer[index++]);
         if (numberOfPoints != OutputHexahedronCellType::NumberOfPoints)
@@ -284,7 +284,7 @@ MeshFileReader<TOutputMesh, ConvertPointPixelTraits, ConvertCellPixelTraits>::Re
         output->SetCell(id++, cell);
         break;
       }
-      case MeshIOBase::QUADRATIC_EDGE_CELL:
+      case MeshIOBase::CellGeometryEnum::QUADRATIC_EDGE_CELL:
       {
         auto numberOfPoints = static_cast<unsigned int>(buffer[index++]);
         if (numberOfPoints != OutputQuadraticEdgeCellType::NumberOfPoints)
@@ -303,7 +303,7 @@ MeshFileReader<TOutputMesh, ConvertPointPixelTraits, ConvertCellPixelTraits>::Re
         output->SetCell(id++, cell);
         break;
       }
-      case MeshIOBase::QUADRATIC_TRIANGLE_CELL:
+      case MeshIOBase::CellGeometryEnum::QUADRATIC_TRIANGLE_CELL:
       {
         auto numberOfPoints = static_cast<unsigned int>(buffer[index++]);
         if (numberOfPoints != OutputQuadraticTriangleCellType::NumberOfPoints)

@@ -296,38 +296,38 @@ PhilipsRECImageIOSetupSliceIndex(PhilipsRECImageIO::SliceIndexType *         ind
 void
 PhilipsRECImageIO::SwapBytesIfNecessary(void * buffer, SizeValueType numberOfPixels)
 {
-  if (m_ByteOrder == LittleEndian)
+  if (m_ByteOrder == ByteOrderEnum::LittleEndian)
   {
     switch (this->m_ComponentType)
     {
-      case CHAR:
+      case IOComponentEnum::CHAR:
         ByteSwapper<char>::SwapRangeFromSystemToLittleEndian((char *)buffer, numberOfPixels);
         break;
-      case UCHAR:
+      case IOComponentEnum::UCHAR:
         ByteSwapper<unsigned char>::SwapRangeFromSystemToLittleEndian((unsigned char *)buffer, numberOfPixels);
         break;
-      case SHORT:
+      case IOComponentEnum::SHORT:
         ByteSwapper<short>::SwapRangeFromSystemToLittleEndian((short *)buffer, numberOfPixels);
         break;
-      case USHORT:
+      case IOComponentEnum::USHORT:
         ByteSwapper<unsigned short>::SwapRangeFromSystemToLittleEndian((unsigned short *)buffer, numberOfPixels);
         break;
-      case INT:
+      case IOComponentEnum::INT:
         ByteSwapper<int>::SwapRangeFromSystemToLittleEndian((int *)buffer, numberOfPixels);
         break;
-      case UINT:
+      case IOComponentEnum::UINT:
         ByteSwapper<unsigned int>::SwapRangeFromSystemToLittleEndian((unsigned int *)buffer, numberOfPixels);
         break;
-      case LONG:
+      case IOComponentEnum::LONG:
         ByteSwapper<long>::SwapRangeFromSystemToLittleEndian((long *)buffer, numberOfPixels);
         break;
-      case ULONG:
+      case IOComponentEnum::ULONG:
         ByteSwapper<unsigned long>::SwapRangeFromSystemToLittleEndian((unsigned long *)buffer, numberOfPixels);
         break;
-      case FLOAT:
+      case IOComponentEnum::FLOAT:
         ByteSwapper<float>::SwapRangeFromSystemToLittleEndian((float *)buffer, numberOfPixels);
         break;
-      case DOUBLE:
+      case IOComponentEnum::DOUBLE:
         ByteSwapper<double>::SwapRangeFromSystemToLittleEndian((double *)buffer, numberOfPixels);
         break;
       default:
@@ -339,34 +339,34 @@ PhilipsRECImageIO::SwapBytesIfNecessary(void * buffer, SizeValueType numberOfPix
   {
     switch (this->m_ComponentType)
     {
-      case CHAR:
+      case IOComponentEnum::CHAR:
         ByteSwapper<char>::SwapRangeFromSystemToBigEndian((char *)buffer, numberOfPixels);
         break;
-      case UCHAR:
+      case IOComponentEnum::UCHAR:
         ByteSwapper<unsigned char>::SwapRangeFromSystemToBigEndian((unsigned char *)buffer, numberOfPixels);
         break;
-      case SHORT:
+      case IOComponentEnum::SHORT:
         ByteSwapper<short>::SwapRangeFromSystemToBigEndian((short *)buffer, numberOfPixels);
         break;
-      case USHORT:
+      case IOComponentEnum::USHORT:
         ByteSwapper<unsigned short>::SwapRangeFromSystemToBigEndian((unsigned short *)buffer, numberOfPixels);
         break;
-      case INT:
+      case IOComponentEnum::INT:
         ByteSwapper<int>::SwapRangeFromSystemToBigEndian((int *)buffer, numberOfPixels);
         break;
-      case UINT:
+      case IOComponentEnum::UINT:
         ByteSwapper<unsigned int>::SwapRangeFromSystemToBigEndian((unsigned int *)buffer, numberOfPixels);
         break;
-      case LONG:
+      case IOComponentEnum::LONG:
         ByteSwapper<long>::SwapRangeFromSystemToBigEndian((long *)buffer, numberOfPixels);
         break;
-      case ULONG:
+      case IOComponentEnum::ULONG:
         ByteSwapper<unsigned long>::SwapRangeFromSystemToBigEndian((unsigned long *)buffer, numberOfPixels);
         break;
-      case FLOAT:
+      case IOComponentEnum::FLOAT:
         ByteSwapper<float>::SwapRangeFromSystemToBigEndian((float *)buffer, numberOfPixels);
         break;
-      case DOUBLE:
+      case IOComponentEnum::DOUBLE:
         ByteSwapper<double>::SwapRangeFromSystemToBigEndian((double *)buffer, numberOfPixels);
         break;
       default:
@@ -380,7 +380,7 @@ PhilipsRECImageIO::PhilipsRECImageIO()
 {
   // by default, have 4 dimensions
   this->SetNumberOfDimensions(4);
-  this->m_PixelType = SCALAR;
+  this->m_PixelType = IOPixelEnum::SCALAR;
   this->m_ComponentType = CHAR;
 
   // Set m_MachineByteOrder to the ByteOrder of the machine
@@ -389,11 +389,11 @@ PhilipsRECImageIO::PhilipsRECImageIO()
   // the file actually contains.
   if (ByteSwapper<int>::SystemIsBigEndian())
   {
-    this->m_MachineByteOrder = this->m_ByteOrder = BigEndian;
+    this->m_MachineByteOrder = this->m_ByteOrder = ByteOrderEnum::BigEndian;
   }
   else
   {
-    this->m_MachineByteOrder = this->m_ByteOrder = LittleEndian;
+    this->m_MachineByteOrder = this->m_ByteOrder = ByteOrderEnum::LittleEndian;
   }
   this->m_SliceIndex = new SliceIndexType();
 }
@@ -619,7 +619,7 @@ PhilipsRECImageIO::ReadImageInformation()
     this->m_SliceIndex, 1, par, imageTypesScanSequencesIndexes, sliceImageTypesIndexes, sliceScanSequencesIndexes);
 
   // As far as I know all Philips REC files are littleEndian.
-  this->m_ByteOrder = LittleEndian;
+  this->m_ByteOrder = ByteOrderEnum::LittleEndian;
 
   // Set dimensions.
   unsigned int numberOfDimensions = 4;
@@ -647,11 +647,11 @@ PhilipsRECImageIO::ReadImageInformation()
   {
     case 8:
       m_ComponentType = CHAR;
-      m_PixelType = SCALAR;
+      m_PixelType = IOPixelEnum::SCALAR;
       break;
     case 16:
-      m_ComponentType = SHORT;
-      m_PixelType = SCALAR;
+      m_ComponentType = IOComponentEnum::SHORT;
+      m_PixelType = IOPixelEnum::SCALAR;
       break;
     default:
       std::ostringstream message;

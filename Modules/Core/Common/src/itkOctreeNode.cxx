@@ -37,13 +37,13 @@ OctreeNode::~OctreeNode()
 }
 
 OctreeNode &
-OctreeNode::GetChild(const enum LeafIdentifier ChildID) const
+OctreeNode::GetChild(const enum LeafIdentifierEnum ChildID) const
 {
   return *m_Branch->GetLeaf(ChildID);
 }
 
 OctreeNode &
-OctreeNode::GetChild(const enum LeafIdentifier ChildID)
+OctreeNode::GetChild(const enum LeafIdentifierEnum ChildID)
 {
   return *m_Branch->GetLeaf(ChildID);
 }

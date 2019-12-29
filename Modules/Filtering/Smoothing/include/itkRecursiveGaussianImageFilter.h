@@ -30,10 +30,21 @@ namespace itk
    second derivative of a gaussian.  */
 enum class GaussianOrderEnum : uint8_t
 {
-  ZeroOrder,
-  FirstOrder,
-  SecondOrder
+  ZeroOrder = 0,
+  FirstOrder = 1,
+  SecondOrder = 2
 };
+
+#if !defined(ITK_LEGACY_REMOVE)
+/** Enables backwards compatibility for enum values */
+using OrderEnumType = GaussianOrderEnum;
+using EnumGaussianOrderType = GaussianOrderEnum;
+// We need to expose the enum values at the class level
+// for backwards compatibility
+static constexpr GaussianOrderEnum ZeroOrder = GaussianOrderEnum::ZeroOrder;
+static constexpr GaussianOrderEnum FirstOrder = GaussianOrderEnum::FirstOrder;
+static constexpr GaussianOrderEnum SecondOrder = GaussianOrderEnum::SecondOrder;
+#endif
 
 /** \class RecursiveGaussianImageFilter
  * \brief Base class for computing IIR convolution with an approximation of a  Gaussian kernel.
@@ -99,16 +110,6 @@ public:
   itkGetConstMacro(Sigma, ScalarRealType);
   itkSetMacro(Sigma, ScalarRealType);
 
-  /** Enables backwards compatibility for enum values */
-  using OrderEnumType = GaussianOrderEnum;
-#if !defined(ITK_LEGACY_REMOVE)
-  // We need to expose the enum values at the class level
-  // for backwards compatibility
-  static constexpr OrderEnumType ZeroOrder = OrderEnumType::ZeroOrder;
-  static constexpr OrderEnumType FirstOrder = OrderEnumType::FirstOrder;
-  static constexpr OrderEnumType SecondOrder = OrderEnumType::SecondOrder;
-#endif
-
   /** Type of the output image */
   using OutputImageType = TOutputImage;
 
@@ -160,8 +161,8 @@ public:
       \li FirstOrder is equivalent to convolving with the first derivative of a Gaussian.
       \li SecondOrder is equivalent to convolving with the second derivative of a Gaussian.
     */
-  itkSetMacro(Order, OrderEnumType);
-  itkGetConstMacro(Order, OrderEnumType);
+  itkSetMacro(Order, GaussianOrderEnum);
+  itkGetConstMacro(Order, GaussianOrderEnum);
 
   /** Explicitly set a zeroth order derivative. */
   void
@@ -235,7 +236,7 @@ private:
   /** Normalize the image across scale space */
   bool m_NormalizeAcrossScale;
 
-  OrderEnumType m_Order;
+  GaussianOrderEnum m_Order;
 };
 
 /** Define how to print enumerations */

@@ -20,7 +20,11 @@
 #include "itkMacro.h"
 namespace itk
 {
-enum LeafIdentifier
+/***
+ * \class LeafIdentifierEnum
+ * \ingroup ITKCommon
+ */
+enum class LeafIdentifierEnum : u_int8_t
 {
   ZERO = 0,
   ONE = 1,
@@ -31,6 +35,18 @@ enum LeafIdentifier
   SIX = 6,
   SEVEN = 7
 };
+#if !defined(ITK_LEGACY_REMOVE)
+// We need to expose the enum values at the class level
+// for backwards compatibility
+static constexpr LeafIdentifierEnum ZERO = LeafIdentifierEnum::ZERO;
+static constexpr LeafIdentifierEnum ONE = LeafIdentifierEnum::ONE;
+static constexpr LeafIdentifierEnum TWO = LeafIdentifierEnum::TWO;
+static constexpr LeafIdentifierEnum THREE = LeafIdentifierEnum::THREE;
+static constexpr LeafIdentifierEnum FOUR = LeafIdentifierEnum::FOUR;
+static constexpr LeafIdentifierEnum FIVE = LeafIdentifierEnum::FIVE;
+static constexpr LeafIdentifierEnum SIX = LeafIdentifierEnum::SIX;
+static constexpr LeafIdentifierEnum SEVEN = LeafIdentifierEnum::SEVEN;
+#endif
 
 // Forward reference because of circular dependencies
 class ITK_FORWARD_EXPORT OctreeNodeBranch;
@@ -75,10 +91,10 @@ public:
    * @{
    */
   OctreeNode &
-  GetChild(const enum LeafIdentifier ChildID) const;
+  GetChild(const enum LeafIdentifierEnum ChildID) const;
 
   OctreeNode &
-  GetChild(const enum LeafIdentifier ChildID);
+  GetChild(const enum LeafIdentifierEnum ChildID);
   /** @}
    */
 
@@ -150,9 +166,9 @@ public:
   }
 
   inline OctreeNode *
-  GetLeaf(enum LeafIdentifier LeafID)
+  GetLeaf(enum LeafIdentifierEnum LeafID)
   {
-    return &m_Leaves[LeafID];
+    return &m_Leaves[static_cast<u_int8_t>(LeafID)];
   }
 
 private:

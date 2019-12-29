@@ -362,7 +362,7 @@ MultiScaleHessianBasedMeasureImageFilter<TInputImage, THessianImage, TOutputImag
   os << indent << "SigmaMinimum:  " << m_SigmaMinimum << std::endl;
   os << indent << "SigmaMaximum:  " << m_SigmaMaximum << std::endl;
   os << indent << "NumberOfSigmaSteps:  " << m_NumberOfSigmaSteps << std::endl;
-  os << indent << "SigmaStepMethod:  " << m_SigmaStepMethod << std::endl;
+  os << indent << "SigmaStepMethod:  " << itkExposeEnumValue(m_SigmaStepMethod) << std::endl;
   os << indent << "HessianToMeasureFilter: " << m_HessianToMeasureFilter << std::endl;
   os << indent << "NonNegativeHessianBasedMeasure:  " << m_NonNegativeHessianBasedMeasure << std::endl;
   os << indent << "GenerateScalesOutput: " << m_GenerateScalesOutput << std::endl;

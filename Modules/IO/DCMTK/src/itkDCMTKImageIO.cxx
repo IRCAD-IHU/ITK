@@ -39,9 +39,9 @@ DCMTKImageIO::DCMTKImageIO()
   m_DImage = nullptr;
 
   // standard ImageIOBase variables
-  m_ByteOrder = BigEndian;
+  m_ByteOrder = ByteOrderEnum::BigEndian;
   this->SetNumberOfDimensions(3); // otherwise, things go crazy w/dir cosines
-  m_PixelType = SCALAR;
+  m_PixelType = IOPixelEnum::SCALAR;
   m_ComponentType = UCHAR;
   // m_FileType =
 
@@ -65,7 +65,7 @@ DCMTKImageIO::DCMTKImageIO()
 }
 
 void
-DCMTKImageIO ::SetLogLevel(LogLevel level)
+DCMTKImageIO ::SetLogLevel(LogLevelEnum level)
 {
   switch (level)
   {
@@ -91,11 +91,11 @@ DCMTKImageIO ::SetLogLevel(LogLevel level)
       OFLog::configure(OFLogger::OFF_LOG_LEVEL);
       break;
     default:
-      itkExceptionMacro(<< "Unknown DCMTK Logging constant " << level);
+      itkExceptionMacro(<< "Unknown DCMTK Logging constant " << static_cast<int>(level));
   }
 }
 
-DCMTKImageIO::LogLevel
+DCMTKImageIO::LogLevelEnum
 DCMTKImageIO ::GetLogLevel() const
 {
   dcmtk::log4cplus::Logger rootLogger = dcmtk::log4cplus::Logger::getRoot();
@@ -285,8 +285,8 @@ DCMTKImageIO ::Read(void * buffer)
   switch (this->m_ComponentType)
   {
     case UNKNOWNCOMPONENTTYPE:
-    case FLOAT:
-    case DOUBLE:
+    case IOComponentEnum::FLOAT:
+    case IOComponentEnum::DOUBLE:
       itkExceptionMacro(<< "Bad component type" << ImageIOBase::GetComponentTypeAsString(this->m_ComponentType));
       break;
     default: // scalarSize already set
@@ -315,16 +315,16 @@ DCMTKImageIO ::ReorderRGBValues(void * buffer, const void * data, size_t count, 
     // see DCMTK file dcmimage/libsrc/dicoimg.cc (function const void *DiColorImage::getData(...) )
     // DCMTK only supports uint8, uint16, and uint32, but we leave LONG (at least 32bits but
     // could be 64bits) for future support.
-    case UCHAR:
+    case IOComponentEnum::UCHAR:
       ReorderRGBValues<unsigned char>(buffer, data, count, voxel_size);
       break;
-    case USHORT:
+    case IOComponentEnum::USHORT:
       ReorderRGBValues<unsigned short>(buffer, data, count, voxel_size);
       break;
-    case UINT:
+    case IOComponentEnum::UINT:
       ReorderRGBValues<unsigned int>(buffer, data, count, voxel_size);
       break;
-    case ULONG:
+    case IOComponentEnum::ULONG:
       ReorderRGBValues<unsigned long>(buffer, data, count, voxel_size);
       break;
     default:
@@ -472,26 +472,26 @@ DCMTKImageIO::ReadImageInformation()
       this->m_ComponentType = CHAR;
       break;
     case EPR_Uint16:
-      this->m_ComponentType = USHORT;
+      this->m_ComponentType = IOComponentEnum::USHORT;
       break;
     case EPR_Sint16:
-      this->m_ComponentType = SHORT;
+      this->m_ComponentType = IOComponentEnum::SHORT;
       break;
     case EPR_Uint32:
-      this->m_ComponentType = UINT;
+      this->m_ComponentType = IOComponentEnum::UINT;
       break;
     case EPR_Sint32:
-      this->m_ComponentType = INT;
+      this->m_ComponentType = IOComponentEnum::INT;
       break;
     default: // HACK should throw exception
-      this->m_ComponentType = USHORT;
+      this->m_ComponentType = IOComponentEnum::USHORT;
       break;
   }
   int numPlanes = this->m_DImage->getInterData()->getPlanes();
   switch (numPlanes)
   {
     case 1:
-      this->m_PixelType = SCALAR;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case 2:
       // hack, supposedly Luminence/Alpha
@@ -500,11 +500,11 @@ DCMTKImageIO::ReadImageInformation()
       break;
     case 3:
       this->SetNumberOfComponents(3);
-      this->m_PixelType = RGB;
+      this->m_PixelType = IOPixelEnum::RGB;
       break;
     case 4:
       this->SetNumberOfComponents(4);
-      this->m_PixelType = RGBA;
+      this->m_PixelType = IOPixelEnum::RGBA;
       break;
   }
 }

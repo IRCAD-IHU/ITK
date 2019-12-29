@@ -30,6 +30,7 @@
 #include "itkSymmetricSecondRankTensor.h"
 #include "itkDiffusionTensor3D.h"
 #include "itkImageRegionSplitterBase.h"
+#include "itkCommonEnumerations.h"
 
 #include "vnl/vnl_vector.h"
 #include "vcl_compiler.h"
@@ -101,50 +102,60 @@ public:
   class UnknownType
   {};
 
-  /** Enums used to manipulate the pixel type. The pixel type provides
-   * context for automatic data conversions (for instance, RGB to
-   * SCALAR, VECTOR to SCALAR). */
-  typedef enum
-  {
-    UNKNOWNPIXELTYPE,
-    SCALAR,
-    RGB,
-    RGBA,
-    OFFSET,
-    VECTOR,
-    POINT,
-    COVARIANTVECTOR,
-    SYMMETRICSECONDRANKTENSOR,
-    DIFFUSIONTENSOR3D,
-    COMPLEX,
-    FIXEDARRAY,
-    MATRIX
-  } IOPixelType;
+  using IOPixelEnum = itk::IOPixelEnum;
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  using IOPixelType = IOPixelEnum;
+  static constexpr IOPixelEnum UNKNOWNPIXELTYPE = IOPixelEnum::UNKNOWNPIXELTYPE;
+  static constexpr IOPixelEnum SCALAR = IOPixelEnum::SCALAR;
+  static constexpr IOPixelEnum RGB = IOPixelEnum::RGB;
+  static constexpr IOPixelEnum RGBA = IOPixelEnum::RGBA;
+  static constexpr IOPixelEnum OFFSET = IOPixelEnum::OFFSET;
+  static constexpr IOPixelEnum VECTOR = IOPixelEnum::VECTOR;
+  static constexpr IOPixelEnum POINT = IOPixelEnum::POINT;
+  static constexpr IOPixelEnum COVARIANTVECTOR = IOPixelEnum::COVARIANTVECTOR;
+  static constexpr IOPixelEnum SYMMETRICSECONDRANKTENSOR = IOPixelEnum::SYMMETRICSECONDRANKTENSOR;
+  static constexpr IOPixelEnum DIFFUSIONTENSOR3D = IOPixelEnum::DIFFUSIONTENSOR3D;
+  static constexpr IOPixelEnum COMPLEX = IOPixelEnum::COMPLEX;
+  static constexpr IOPixelEnum FIXEDARRAY = IOPixelEnum::FIXEDARRAY;
+  static constexpr IOPixelEnum MATRIX = IOPixelEnum::MATRIX;
+#endif
 
-  /** Enums used to manipulate the component type. The component type
-   * refers to the actual storage class associated with either a
-   * SCALAR pixel type or elements of a compound pixel.
-   */
-  // NOTE unsigned char, char, and signed char are 3 distinct types in C++
-  // the enum value UCHAR represents 'unsigned char'
-  // the enum value CHAR represents  'signed char'
-  // and the 'char' type maps to one of UCHAR or CHAR based on the platforms 'signededness'
-  typedef enum
-  {
-    UNKNOWNCOMPONENTTYPE,
-    UCHAR,
-    CHAR,
-    USHORT,
-    SHORT,
-    UINT,
-    INT,
-    ULONG,
-    LONG,
-    ULONGLONG,
-    LONGLONG,
-    FLOAT,
-    DOUBLE
-  } IOComponentType;
+  using IOComponentEnum = itk::IOComponentEnum;
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  using IOComponentType = IOComponentEnum;
+  static constexpr IOComponentEnum UNKNOWNCOMPONENTTYPE = IOComponentEnum::UNKNOWNCOMPONENTTYPE;
+  static constexpr IOComponentEnum UCHAR = IOComponentEnum::UCHAR;
+  static constexpr IOComponentEnum CHAR = IOComponentEnum::CHAR;
+  static constexpr IOComponentEnum USHORT = IOComponentEnum::USHORT;
+  static constexpr IOComponentEnum SHORT = IOComponentEnum::SHORT;
+  static constexpr IOComponentEnum UINT = IOComponentEnum::UINT;
+  static constexpr IOComponentEnum INT = IOComponentEnum::INT;
+  static constexpr IOComponentEnum ULONG = IOComponentEnum::ULONG;
+  static constexpr IOComponentEnum LONG = IOComponentEnum::LONG;
+  static constexpr IOComponentEnum ULONGLONG = IOComponentEnum::ULONGLONG;
+  static constexpr IOComponentEnum LONGLONG = IOComponentEnum::LONGLONG;
+  static constexpr IOComponentEnum FLOAT = IOComponentEnum::FLOAT;
+  static constexpr IOComponentEnum DOUBLE = IOComponentEnum::DOUBLE;
+#endif
+
+  using FileEnum = itk::FileEnum;
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr FileEnum ASCII = FileEnum::ASCII;
+  static constexpr FileEnum Binary = FileEnum::Binary;
+  static constexpr FileEnum TypeNotApplicable = FileEnum::TypeNotApplicable;
+#endif
+
+  using ByteOrderEnum = itk::ByteOrderEnum;
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr ByteOrderEnum BigEndian = ByteOrderEnum::BigEndian;
+  static constexpr ByteOrderEnum LittleEndian = ByteOrderEnum::LittleEndian;
+  static constexpr ByteOrderEnum OrderNotApplicable = ByteOrderEnum::OrderNotApplicable;
+#endif
+
 
   /** Set/Get the number of independent variables (dimensions) in the
    * image being read or written. Note this is not necessarily what
@@ -221,13 +232,13 @@ public:
    * SCALAR, RGB, RGBA, VECTOR, COVARIANTVECTOR, POINT, INDEX. If
    * the PIXELTYPE is SCALAR, then the NumberOfComponents should be 1.
    * Any other of PIXELTYPE will have more than one component. */
-  itkSetEnumMacro(PixelType, IOPixelType);
-  itkGetEnumMacro(PixelType, IOPixelType);
+  itkSetEnumMacro(PixelType, IOPixelEnum);
+  itkGetEnumMacro(PixelType, IOPixelEnum);
 
   /** Set/Get the component type of the image. This is always a native
    * type. */
-  itkSetEnumMacro(ComponentType, IOComponentType);
-  itkGetEnumMacro(ComponentType, IOComponentType);
+  itkSetEnumMacro(ComponentType, IOComponentEnum);
+  itkGetEnumMacro(ComponentType, IOComponentEnum);
   /** get the type_info for the current pixel component type.
    * This function is DEPRECATED and only provided for backwards
    * compatibility.  There is no use for this method that can't
@@ -301,54 +312,36 @@ public:
    *  palette image file supported for palette reading.*/
   itkGetConstMacro(IsReadAsScalarPlusPalette, bool);
 
-  /** Convenience method returns the IOComponentType as a string. This can be
+  /** Convenience method returns the IOComponentEnum as a string. This can be
    * used for writing output files. */
-  static std::string GetComponentTypeAsString(IOComponentType);
+  static std::string GetComponentTypeAsString(IOComponentEnum);
 
-  /** Convenience method returns the IOComponentType corresponding to a string. */
-  static IOComponentType
+  /** Convenience method returns the IOComponentEnum corresponding to a string. */
+  static IOComponentEnum
   GetComponentTypeFromString(const std::string & typeString);
 
-  /** Convenience method returns the IOPixelType as a string. This can be
+  /** Convenience method returns the IOPixelEnum as a string. This can be
    * used for writing output files. */
-  static std::string GetPixelTypeAsString(IOPixelType);
+  static std::string GetPixelTypeAsString(IOPixelEnum);
 
-  /** Convenience method returns the IOPixelType corresponding to a string. */
-  static IOPixelType
+  /** Convenience method returns the IOPixelEnum corresponding to a string. */
+  static IOPixelEnum
   GetPixelTypeFromString(const std::string & pixelString);
-
-  /** Enums used to specify write style: whether binary or ASCII. Some
-   * subclasses use this, some ignore it. */
-  enum FileType : uint8_t
-  {
-    ASCII,
-    Binary,
-    TypeNotApplicable
-  };
-
-  /** Enums used to specify byte order; whether Big Endian or Little Endian.
-   * Some subclasses use this, some ignore it. */
-  enum ByteOrder : uint8_t
-  {
-    BigEndian,
-    LittleEndian,
-    OrderNotApplicable
-  };
 
   /** These methods control whether the file is written binary or ASCII.
    * Many file formats (i.e., subclasses) ignore this flag. */
-  itkSetEnumMacro(FileType, FileType);
-  itkGetEnumMacro(FileType, FileType);
+  itkSetEnumMacro(FileType, FileEnum);
+  itkGetEnumMacro(FileType, FileEnum);
   void
   SetFileTypeToASCII()
   {
-    this->SetFileType(ASCII);
+    this->SetFileType(FileEnum::ASCII);
   }
 
   void
   SetFileTypeToBinary()
   {
-    this->SetFileType(Binary);
+    this->SetFileType(FileEnum::Binary);
   }
 
   /** These methods indicate the byte ordering of the file you are
@@ -362,27 +355,27 @@ public:
    * a VAX or PC, SetByteOrderToLittleEndian() otherwise
    * SetByteOrderToBigEndian().  Some ImageIOBase subclasses
    * ignore these methods. */
-  itkSetEnumMacro(ByteOrder, ByteOrder);
-  itkGetEnumMacro(ByteOrder, ByteOrder);
+  itkSetEnumMacro(ByteOrder, ByteOrderEnum);
+  itkGetEnumMacro(ByteOrder, ByteOrderEnum);
   void
   SetByteOrderToBigEndian()
   {
-    this->SetByteOrder(BigEndian);
+    this->SetByteOrder(ByteOrderEnum::BigEndian);
   }
 
   void
   SetByteOrderToLittleEndian()
   {
-    this->SetByteOrder(LittleEndian);
+    this->SetByteOrder(ByteOrderEnum::LittleEndian);
   }
 
-  /** Convenience method returns the FileType as a string. This can be
+  /** Convenience method returns the FileEnum as a string. This can be
    * used for writing output files. */
-  std::string GetFileTypeAsString(FileType) const;
+  std::string GetFileTypeAsString(FileEnum) const;
 
-  /** Convenience method returns the ByteOrder as a string. This can be
+  /** Convenience method returns the ByteOrderEnum as a string. This can be
    * used for writing output files. */
-  std::string GetByteOrderAsString(ByteOrder) const;
+  std::string GetByteOrderAsString(ByteOrderEnum) const;
 
   /** Type for representing size of bytes, and or positions along a file */
   using SizeType = ::itk::intmax_t;
@@ -559,14 +552,14 @@ public:
   template <typename TPixel>
   struct MapPixelType
   {
-    static constexpr IOComponentType CType = UNKNOWNCOMPONENTTYPE;
+    static constexpr IOComponentEnum CType = IOComponentEnum::UNKNOWNCOMPONENTTYPE;
   };
   template <typename TPixel>
   void
   SetPixelTypeInfo(const TPixel *)
   {
     this->SetNumberOfComponents(1);
-    this->SetPixelType(SCALAR);
+    this->SetPixelType(IOPixelEnum::SCALAR);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
   template <typename TPixel>
@@ -574,7 +567,7 @@ public:
   SetPixelTypeInfo(const RGBPixel<TPixel> *)
   {
     this->SetNumberOfComponents(3);
-    this->SetPixelType(RGB);
+    this->SetPixelType(IOPixelEnum::RGB);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
   template <typename TPixel>
@@ -582,7 +575,7 @@ public:
   SetPixelTypeInfo(const RGBAPixel<TPixel> *)
   {
     this->SetNumberOfComponents(4);
-    this->SetPixelType(RGBA);
+    this->SetPixelType(IOPixelEnum::RGBA);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
   template <typename TPixel, unsigned VLength>
@@ -590,7 +583,7 @@ public:
   SetPixelTypeInfo(const Vector<TPixel, VLength> *)
   {
     this->SetNumberOfComponents(VLength);
-    this->SetPixelType(VECTOR);
+    this->SetPixelType(IOPixelEnum::VECTOR);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
   template <typename TPixel>
@@ -598,7 +591,7 @@ public:
   SetPixelTypeInfo(const VariableLengthVector<TPixel> *)
   {
     this->SetNumberOfComponents(1);
-    this->SetPixelType(VECTOR);
+    this->SetPixelType(IOPixelEnum::VECTOR);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
   template <typename TPixel, unsigned VLength>
@@ -606,7 +599,7 @@ public:
   SetPixelTypeInfo(const CovariantVector<TPixel, VLength> *)
   {
     this->SetNumberOfComponents(VLength);
-    this->SetPixelType(COVARIANTVECTOR);
+    this->SetPixelType(IOPixelEnum::COVARIANTVECTOR);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
   template <typename TPixel, unsigned VLength>
@@ -614,7 +607,7 @@ public:
   SetPixelTypeInfo(const FixedArray<TPixel, VLength> *)
   {
     this->SetNumberOfComponents(VLength);
-    this->SetPixelType(COVARIANTVECTOR);
+    this->SetPixelType(IOPixelEnum::COVARIANTVECTOR);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
 
@@ -623,7 +616,7 @@ public:
   SetPixelTypeInfo(const SymmetricSecondRankTensor<TPixel, VLength> *)
   {
     this->SetNumberOfComponents(VLength * (VLength + 1) / 2);
-    this->SetPixelType(SYMMETRICSECONDRANKTENSOR);
+    this->SetPixelType(IOPixelEnum::SYMMETRICSECONDRANKTENSOR);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
 
@@ -632,7 +625,7 @@ public:
   SetPixelTypeInfo(const DiffusionTensor3D<TPixel> *)
   {
     this->SetNumberOfComponents(6);
-    this->SetPixelType(DIFFUSIONTENSOR3D);
+    this->SetPixelType(IOPixelEnum::DIFFUSIONTENSOR3D);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
 
@@ -641,7 +634,7 @@ public:
   SetPixelTypeInfo(const Matrix<TPixel, VLength, VLength> *)
   {
     this->SetNumberOfComponents(VLength * VLength);
-    this->SetPixelType(MATRIX);
+    this->SetPixelType(IOPixelEnum::MATRIX);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
 
@@ -650,7 +643,7 @@ public:
   SetPixelTypeInfo(const std::complex<TPixel> *)
   {
     this->SetNumberOfComponents(2);
-    this->SetPixelType(COMPLEX);
+    this->SetPixelType(IOPixelEnum::COMPLEX);
     this->SetComponentType(MapPixelType<TPixel>::CType);
   }
 
@@ -659,8 +652,8 @@ public:
   SetPixelTypeInfo(const Offset<VLength> *)
   {
     this->SetNumberOfComponents(VLength);
-    this->SetPixelType(ImageIOBase::OFFSET);
-    this->SetComponentType(ImageIOBase::LONG);
+    this->SetPixelType(IOPixelEnum::OFFSET);
+    this->SetComponentType(IOComponentEnum::LONG);
   }
 
 protected:
@@ -682,16 +675,16 @@ protected:
   HasSupportedWriteExtension(const char * fileName, bool ignoreCase = true);
 
   /** Used internally to keep track of the type of the pixel. */
-  IOPixelType m_PixelType{ SCALAR };
+  IOPixelEnum m_PixelType{ IOPixelEnum::SCALAR };
 
   /** Used internally to keep track of the type of the component. It is set
    * when ComputeStrides() is invoked. */
-  IOComponentType m_ComponentType{ UNKNOWNCOMPONENTTYPE };
+  IOComponentEnum m_ComponentType{ IOComponentEnum::UNKNOWNCOMPONENTTYPE };
 
   /** Big or Little Endian, and the type of the file. (May be ignored.) */
-  ByteOrder m_ByteOrder{ OrderNotApplicable };
+  ByteOrderEnum m_ByteOrder{ ByteOrderEnum::OrderNotApplicable };
 
-  FileType m_FileType{ TypeNotApplicable };
+  FileEnum m_FileType{ FileEnum::TypeNotApplicable };
 
   /** Does the ImageIOBase object have enough info to be of use? */
   bool m_Initialized;
@@ -836,11 +829,11 @@ protected:
 
   /** Convenient method to write a buffer as ASCII text. */
   virtual void
-  WriteBufferAsASCII(std::ostream & os, const void * buffer, IOComponentType ctype, SizeType numberOfBytesToWrite);
+  WriteBufferAsASCII(std::ostream & os, const void * buffer, IOComponentEnum ctype, SizeType numberOfBytesToWrite);
 
   /** Convenient method to read a buffer as ASCII text. */
   virtual void
-  ReadBufferAsASCII(std::istream & os, void * buffer, IOComponentType ctype, SizeType numberOfBytesToBeRead);
+  ReadBufferAsASCII(std::istream & os, void * buffer, IOComponentEnum ctype, SizeType numberOfBytesToBeRead);
 
   /** Convenient method to read a buffer as binary. Return true on success. */
   bool
@@ -883,41 +876,41 @@ private:
 
 /** Utility function for writing RAW bytes */
 extern ITKIOImageBase_EXPORT void
-WriteRawBytesAfterSwapping(ImageIOBase::IOComponentType componentType,
-                           const void *                 buffer,
-                           std::ofstream &              file,
-                           ImageIOBase::ByteOrder       byteOrder,
-                           SizeValueType                numberOfBytes,
-                           SizeValueType                numberOfComponents);
+WriteRawBytesAfterSwapping(IOComponentEnum componentType,
+                           const void *    buffer,
+                           std::ofstream & file,
+                           ByteOrderEnum   byteOrder,
+                           SizeValueType   numberOfBytes,
+                           SizeValueType   numberOfComponents);
 
 /** Utility function for reading RAW bytes */
 extern ITKIOImageBase_EXPORT void
-ReadRawBytesAfterSwapping(ImageIOBase::IOComponentType componentType,
-                          void *                       buffer,
-                          ImageIOBase::ByteOrder       byteOrder,
-                          SizeValueType                numberOfComponents);
+ReadRawBytesAfterSwapping(IOComponentEnum componentType,
+                          void *          buffer,
+                          ByteOrderEnum   byteOrder,
+                          SizeValueType   numberOfComponents);
 
 #define IMAGEIOBASE_TYPEMAP(type, ctype)                                                                               \
   template <>                                                                                                          \
   struct ImageIOBase::MapPixelType<type>                                                                               \
   {                                                                                                                    \
-    static constexpr IOComponentType CType = ctype;                                                                    \
+    static constexpr IOComponentEnum CType = ctype;                                                                    \
   }
 
 // the following typemaps are not platform independent
-IMAGEIOBASE_TYPEMAP(signed char, IOComponentType::CHAR);
-IMAGEIOBASE_TYPEMAP(char, std::numeric_limits<char>::is_signed ? IOComponentType::CHAR : IOComponentType::UCHAR);
-IMAGEIOBASE_TYPEMAP(unsigned char, IOComponentType::UCHAR);
-IMAGEIOBASE_TYPEMAP(short, IOComponentType::SHORT);
-IMAGEIOBASE_TYPEMAP(unsigned short, IOComponentType::USHORT);
-IMAGEIOBASE_TYPEMAP(int, IOComponentType::INT);
-IMAGEIOBASE_TYPEMAP(unsigned int, IOComponentType::UINT);
-IMAGEIOBASE_TYPEMAP(long, IOComponentType::LONG);
-IMAGEIOBASE_TYPEMAP(unsigned long, IOComponentType::ULONG);
-IMAGEIOBASE_TYPEMAP(long long, IOComponentType::LONGLONG);
-IMAGEIOBASE_TYPEMAP(unsigned long long, IOComponentType::ULONGLONG);
-IMAGEIOBASE_TYPEMAP(float, IOComponentType::FLOAT);
-IMAGEIOBASE_TYPEMAP(double, IOComponentType::DOUBLE);
+IMAGEIOBASE_TYPEMAP(signed char, IOComponentEnum::CHAR);
+IMAGEIOBASE_TYPEMAP(char, std::numeric_limits<char>::is_signed ? IOComponentEnum::CHAR : IOComponentEnum::UCHAR);
+IMAGEIOBASE_TYPEMAP(unsigned char, IOComponentEnum::UCHAR);
+IMAGEIOBASE_TYPEMAP(short, IOComponentEnum::SHORT);
+IMAGEIOBASE_TYPEMAP(unsigned short, IOComponentEnum::USHORT);
+IMAGEIOBASE_TYPEMAP(int, IOComponentEnum::INT);
+IMAGEIOBASE_TYPEMAP(unsigned int, IOComponentEnum::UINT);
+IMAGEIOBASE_TYPEMAP(long, IOComponentEnum::LONG);
+IMAGEIOBASE_TYPEMAP(unsigned long, IOComponentEnum::ULONG);
+IMAGEIOBASE_TYPEMAP(long long, IOComponentEnum::LONGLONG);
+IMAGEIOBASE_TYPEMAP(unsigned long long, IOComponentEnum::ULONGLONG);
+IMAGEIOBASE_TYPEMAP(float, IOComponentEnum::FLOAT);
+IMAGEIOBASE_TYPEMAP(double, IOComponentEnum::DOUBLE);
 #undef IMAGIOBASE_TYPEMAP
 
 } // end namespace itk

@@ -135,7 +135,7 @@ public:
                       const std::vector<SizeValueType> & dim,
                       const char *                       fourCC,
                       unsigned int                       nChannels,
-                      IOComponentType                    componentType) = 0;
+                      IOComponentEnum                    componentType) = 0;
 
 protected:
   VideoIOBase();

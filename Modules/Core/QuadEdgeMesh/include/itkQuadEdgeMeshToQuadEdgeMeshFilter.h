@@ -218,7 +218,7 @@ CopyMeshToMeshCells(const TInputMesh * in, TOutputMesh * out)
   using InputCellTraits = typename TInputMesh::CellTraits;
   using InputPointsIdInternalIterator = typename InputCellTraits::PointIdInternalIterator;
 
-  out->SetCellsAllocationMethod(TOutputMesh::CellsAllocationMethodType::CellsAllocatedDynamicallyCellByCell);
+  out->SetCellsAllocationMethod(TOutputMesh::MeshClassCellsAllocationMethodEnum::CellsAllocatedDynamicallyCellByCell);
 
   InputCellsContainerConstPointer inCells = in->GetCells();
 

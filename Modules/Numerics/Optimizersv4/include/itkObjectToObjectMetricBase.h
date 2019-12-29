@@ -213,20 +213,33 @@ public:
   MeasureType
   GetCurrentValue() const;
 
-  typedef enum
+  /**\class MetricCategoryEnum
+   * \ingroup ITKOptimizersv4
+   * Metric category type enum
+   */
+  enum class MetricCategoryEnum : uint8_t
   {
     UNKNOWN_METRIC = 0,
     OBJECT_METRIC = 1,
     IMAGE_METRIC = 2,
     POINT_SET_METRIC = 3,
     MULTI_METRIC = 4
-  } MetricCategoryType;
+  };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr MetricCategoryEnum UNKNOWN_METRIC = MetricCategoryEnum::UNKNOWN_METRIC;
+  static constexpr MetricCategoryEnum OBJECT_METRIC = MetricCategoryEnum::OBJECT_METRIC;
+  static constexpr MetricCategoryEnum IMAGE_METRIC = MetricCategoryEnum::IMAGE_METRIC;
+  static constexpr MetricCategoryEnum POINT_SET_METRIC = MetricCategoryEnum::POINT_SET_METRIC;
+  static constexpr MetricCategoryEnum MULTI_METRIC = MetricCategoryEnum::MULTI_METRIC;
+#endif
+
 
   /** Get metric category */
-  virtual MetricCategoryType
+  virtual MetricCategoryEnum
   GetMetricCategory() const
   {
-    return UNKNOWN_METRIC;
+    return MetricCategoryEnum::UNKNOWN_METRIC;
   }
 
 protected:

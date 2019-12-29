@@ -1178,7 +1178,7 @@ ImageRegistrationMethodv4<TFixedImage, TMovingImage, TTransform, TVirtualImage, 
     os << indent << "Optimizers weights: " << this->m_OptimizerWeights << std::endl;
   }
 
-  os << indent << "Metric sampling strategy: " << this->m_MetricSamplingStrategy << std::endl;
+  os << indent << "Metric sampling strategy: " << itkExposeEnumValue(this->m_MetricSamplingStrategy) << std::endl;
 
   os << indent << "Metric sampling percentage: ";
   for (SizeValueType i = 0; i < this->m_NumberOfLevels; i++)

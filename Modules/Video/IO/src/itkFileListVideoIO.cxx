@@ -309,7 +309,7 @@ FileListVideoIO::SetWriterParameters(TemporalRatioType                  framesPe
                                      const std::vector<SizeValueType> & dim,
                                      const char *                       itkNotUsed(fourCC),
                                      unsigned int                       nChannels,
-                                     IOComponentType                    itkNotUsed(componentType))
+                                     IOComponentEnum                    itkNotUsed(componentType))
 {
   m_Dimensions.clear();
   m_Origin.clear();
@@ -454,7 +454,7 @@ FileListVideoIO::ResetMembers()
   m_ReadFrom = ReadFromEnum::ReadFromFile;
 
   // Members from ImageIOBase
-  m_PixelType = SCALAR;
+  m_PixelType = IOPixelEnum::SCALAR;
   m_ComponentType = UCHAR;
   this->SetNumberOfDimensions(2);
   m_Spacing[0] = 1.0;

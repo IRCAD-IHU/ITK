@@ -67,19 +67,27 @@ public:
   /** Standard class type aliases. */
   using Self = Region;
 
-  /** Enums used to describe the extent types. */
-  enum RegionType
+  /**\class RegionEnum
+   * \ingroup ITKCommon
+   * Enums used to describe the extent types. */
+  enum class RegionEnum : u_int8_t
   {
     ITK_UNSTRUCTURED_REGION,
     ITK_STRUCTURED_REGION
   };
+
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr RegionEnum ITK_UNSTRUCTURED_REGION = RegionEnum::ITK_UNSTRUCTURED_REGION;
+  static constexpr RegionEnum ITK_STRUCTURED_REGION = RegionEnum::ITK_STRUCTURED_REGION;
+#endif
 
   /** Standard part of all itk objects. */
   itkTypeMacroNoParent(Region);
 
   /** Subclasses must return a region type describing whether the region
    * is structured or unstructured. */
-  virtual RegionType
+  virtual RegionEnum
   GetRegionType() const = 0;
 
   /** Print the region. */

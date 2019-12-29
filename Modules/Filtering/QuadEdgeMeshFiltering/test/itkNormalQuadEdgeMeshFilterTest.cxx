@@ -49,7 +49,7 @@ itkNormalQuadEdgeMeshFilterTest(int argc, char * argv[])
 
   using ReaderType = itk::MeshFileReader<InputMeshType>;
   using NormalFilterType = itk::NormalQuadEdgeMeshFilter<InputMeshType, OutputMeshType>;
-  NormalFilterType::WeightType weight_type;
+  NormalFilterType::WeightEnum weight_type;
 
   int param = std::stoi(argv[2]);
 

@@ -136,7 +136,7 @@ public:
   using HistogramType = typename CooccurrenceMatrixFilterType::HistogramType;
   using TextureFeaturesFilterType = HistogramToTextureFeaturesFilter<HistogramType>;
 
-  using TextureFeatureName = short;
+  using TextureFeatureName = typename TextureFeaturesFilterType::TextureFeatureEnum;
   using FeatureNameVector = VectorContainer<unsigned char, TextureFeatureName>;
 
   using FeatureNameVectorPointer = typename FeatureNameVector::Pointer;

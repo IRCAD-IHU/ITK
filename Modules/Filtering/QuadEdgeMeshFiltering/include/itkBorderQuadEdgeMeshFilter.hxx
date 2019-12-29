@@ -440,8 +440,8 @@ BorderQuadEdgeMeshFilter<TInputMesh, TOutputMesh>::PrintSelf(std::ostream & os, 
 {
   Superclass::PrintSelf(os, indent);
 
-  os << indent << "TransformType: " << m_TransformType << std::endl;
-  os << indent << "BorderPick: " << m_BorderPick << std::endl;
+  os << indent << "TransformType: " << static_cast<char>(m_TransformType) << std::endl;
+  os << indent << "BorderPick: " << static_cast<char>(m_BorderPick) << std::endl;
   os << indent << "Radius: " << m_Radius << std::endl;
 }
 } // namespace itk

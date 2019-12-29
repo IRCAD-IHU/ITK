@@ -35,20 +35,20 @@ namespace itk
 struct ExceptionGlobals
 {
   ExceptionGlobals()
-    : m_ExceptionAction(FloatingPointExceptions::ABORT)
+    : m_ExceptionAction(FloatingPointExceptions::ExceptionActionEnum::ABORT)
     , m_Enabled(false){};
-  FloatingPointExceptions::ExceptionAction m_ExceptionAction;
-  bool                                     m_Enabled;
+  FloatingPointExceptions::ExceptionActionEnum m_ExceptionAction;
+  bool                                         m_Enabled;
 };
 
 void
-FloatingPointExceptions ::SetExceptionAction(ExceptionAction a)
+FloatingPointExceptions ::SetExceptionAction(FloatingPointExceptions::ExceptionActionEnum a)
 {
   itkInitGlobalsMacro(PimplGlobals);
   FloatingPointExceptions::m_PimplGlobals->m_ExceptionAction = a;
 }
 
-FloatingPointExceptions::ExceptionAction
+FloatingPointExceptions::ExceptionActionEnum
 FloatingPointExceptions::GetExceptionAction()
 {
   itkInitGlobalsMacro(PimplGlobals);
@@ -88,7 +88,7 @@ namespace
 void
 itkFloatingPointExceptionsAbortOrExit()
 {
-  if (itk::FloatingPointExceptions::GetExceptionAction() == itk::FloatingPointExceptions::ABORT)
+  if (itk::FloatingPointExceptions::GetExceptionAction() == itk::FloatingPointExceptions::ExceptionActionEnum::ABORT)
   {
     abort();
   }

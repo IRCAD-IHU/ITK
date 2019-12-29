@@ -64,7 +64,7 @@ itkGDCMImageIOTest(int argc, char * argv[])
   }
 
   // Exercise the get methods
-  std::cout << "InternalComponentType: " << gdcmImageIO->GetInternalComponentType() << std::endl;
+  std::cout << "InternalComponentType: " << itkExposeEnumValue(gdcmImageIO->GetInternalComponentType()) << std::endl;
   std::cout << "RescaleSlope: " << gdcmImageIO->GetRescaleSlope() << std::endl;
   std::cout << "RescaleIntercept: " << gdcmImageIO->GetRescaleIntercept() << std::endl;
   std::cout << "UIDPrefix: " << gdcmImageIO->GetUIDPrefix() << std::endl;
@@ -155,7 +155,7 @@ itkGDCMImageIOTest(int argc, char * argv[])
   ostrm.str("");
   ostrm << itk::Math::Ceil<int, double>(1. / rescaler->GetScale());
   itk::EncapsulateMetaData<std::string>(dict, "0028|1053", ostrm.str());
-  gdcmImageIO->SetInternalComponentType(itk::ImageIOBase::UCHAR);
+  gdcmImageIO->SetInternalComponentType(itk::IOComponentEnum::UCHAR);
   rescaledDicomWriter->SetImageIO(gdcmImageIO);
 
   gdcmImageIO->Print(std::cout);

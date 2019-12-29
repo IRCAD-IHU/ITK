@@ -31,15 +31,25 @@ enum
 };
 
 /**
+ * \class OctreePlaneEnum
+ * \ingroup ITKCommon
  * The enumeration to define the planar orientation of the octree
  */
-enum OctreePlaneType
+enum class OctreePlaneEnum : uint8_t
 {
   UNKNOWN_PLANE,   ///< The plane is Unknown
   SAGITAL_PLANE,   ///< The plane is Sagital
   CORONAL_PLANE,   ///< The plane is Coronal
   TRANSVERSE_PLANE ///< The plane is Transverse
 };
+#if !defined(ITK_LEGACY_REMOVE)
+// We need to expose the enum values at the class level
+// for backwards compatibility
+static constexpr OctreePlaneEnum UNKNOWN_PLANE = OctreePlaneEnum::UNKNOWN_PLANE;
+static constexpr OctreePlaneEnum SAGITAL_PLANE = OctreePlaneEnum::SAGITAL_PLANE;
+static constexpr OctreePlaneEnum CORONAL_PLANE = OctreePlaneEnum::CORONAL_PLANE;
+static constexpr OctreePlaneEnum TRANSVERSE_PLANE = OctreePlaneEnum::TRANSVERSE_PLANE;
+#endif
 
 /**
  * \class OctreeBase
@@ -180,6 +190,16 @@ public:
   unsigned int
   GetDepth() override;
 
+  /***
+   * Exposes enum values for backwards compatibility
+   * */
+#if !defined(ITK_LEGACY_REMOVE)
+  static constexpr OctreePlaneEnum UNKNOWN_PLANE = OctreePlaneEnum::UNKNOWN_PLANE;
+  static constexpr OctreePlaneEnum SAGITAL_PLANE = OctreePlaneEnum::SAGITAL_PLANE;
+  static constexpr OctreePlaneEnum CORONAL_PLANE = OctreePlaneEnum::CORONAL_PLANE;
+  static constexpr OctreePlaneEnum TRANSVERSE_PLANE = OctreePlaneEnum::TRANSVERSE_PLANE;
+#endif
+
   OctreeNode *
   GetTree() override;
 
@@ -200,7 +220,7 @@ private:
                unsigned       ysize,
                unsigned       zsize);
 
-  OctreePlaneType m_Plane{ UNKNOWN_PLANE }; // The orientation of the plane for this octree
+  OctreePlaneEnum m_Plane{ OctreePlaneEnum::UNKNOWN_PLANE }; // The orientation of the plane for this octree
 
   // The width of the Octree. This is always a power of 2,
   // and large enough to contain MAX(DIMS[1,2,3])

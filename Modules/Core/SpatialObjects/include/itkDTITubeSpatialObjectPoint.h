@@ -56,14 +56,14 @@ public:
   using FieldType = std::pair<std::string, float>;
   using FieldListType = std::vector<FieldType>;
 
+#if !defined(ITK_LEGACY_REMOVE)
   /** Enables backwards compatibility for enum values */
   using FieldEnumType = DTITubeSpatialObjectPointFieldEnum;
-#if !defined(ITK_LEGACY_REMOVE)
   // We need to expose the enum values at the class level
   // for backwards compatibility
-  static constexpr FieldEnumType FA = FieldEnumType::FA;
-  static constexpr FieldEnumType ADC = FieldEnumType::ADC;
-  static constexpr FieldEnumType GA = FieldEnumType::GA;
+  static constexpr DTITubeSpatialObjectPointFieldEnum FA = DTITubeSpatialObjectPointFieldEnum::FA;
+  static constexpr DTITubeSpatialObjectPointFieldEnum ADC = DTITubeSpatialObjectPointFieldEnum::ADC;
+  static constexpr DTITubeSpatialObjectPointFieldEnum GA = DTITubeSpatialObjectPointFieldEnum::GA;
 #endif
 
   /** Constructor. This one defines the number of dimensions in the
@@ -111,11 +111,11 @@ public:
 
   /** Add a field to the point list */
   void
-  AddField(FieldEnumType name, float value);
+  AddField(DTITubeSpatialObjectPointFieldEnum name, float value);
 
   /** Set a field value */
   void
-  SetField(FieldEnumType name, float value);
+  SetField(DTITubeSpatialObjectPointFieldEnum name, float value);
 
   void
   SetField(const char * name, float value);
@@ -132,7 +132,7 @@ public:
   GetField(const char * name) const;
 
   float
-  GetField(FieldEnumType name) const;
+  GetField(DTITubeSpatialObjectPointFieldEnum name) const;
 
 protected:
   float         m_TensorMatrix[6];
@@ -144,7 +144,7 @@ protected:
 
   /** Translate the enum to char */
   std::string
-  TranslateEnumToChar(FieldEnumType name) const;
+  TranslateEnumToChar(DTITubeSpatialObjectPointFieldEnum name) const;
 };
 
 /** Define how to print enumerations */

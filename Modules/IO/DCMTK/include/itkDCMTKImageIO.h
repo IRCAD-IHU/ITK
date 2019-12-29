@@ -52,11 +52,13 @@ public:
   /** Run-time type information (and related methods). */
   itkTypeMacro(DCMTKImageIO, ImageIOBase);
 
-  /** enum for DCMTK log level.  These are defined here without
+  /** \class LogLevelEnum
+   * \ingroup IOFilters
+   * enum for DCMTK log level.  These are defined here without
    *  reference to DCMTK library enumerations, to avoid including
    * dcmtk headers in this header.
    */
-  enum LogLevel
+  enum class LogLevelEnum : uint8_t
   {
     TRACE_LOG_LEVEL = 0,
     DEBUG_LOG_LEVEL,
@@ -66,6 +68,16 @@ public:
     FATAL_LOG_LEVEL,
     OFF_LOG_LEVEL,
   };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr LogLevelEnum TRACE_LOG_LEVEL = LogLevelEnum::TRACE_LOG_LEVEL;
+  static constexpr LogLevelEnum DEBUG_LOG_LEVEL = LogLevelEnum::DEBUG_LOG_LEVEL;
+  static constexpr LogLevelEnum INFO_LOG_LEVEL = LogLevelEnum::INFO_LOG_LEVEL;
+  static constexpr LogLevelEnum WARN_LOG_LEVEL = LogLevelEnum::WARN_LOG_LEVEL;
+  static constexpr LogLevelEnum ERROR_LOG_LEVEL = LogLevelEnum::ERROR_LOG_LEVEL;
+  static constexpr LogLevelEnum FATAL_LOG_LEVEL = LogLevelEnum::FATAL_LOG_LEVEL;
+  static constexpr LogLevelEnum OFF_LOG_LEVEL = LogLevelEnum::OFF_LOG_LEVEL;
+#endif
 
   /** */
   void
@@ -108,9 +120,9 @@ public:
 
   /** Set the DCMTK Message Logging Level */
   void
-  SetLogLevel(LogLevel level);
+  SetLogLevel(LogLevelEnum level);
   /** Get the DCMTK Message Logging Level */
-  LogLevel
+  LogLevelEnum
   GetLogLevel() const;
 
   DCMTKImageIO();

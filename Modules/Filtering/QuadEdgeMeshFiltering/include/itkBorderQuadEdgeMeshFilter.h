@@ -25,6 +25,25 @@
 
 namespace itk
 {
+
+/**\class BorderTransformEnum
+ * \ingroup ITKQuadEdgeMeshFiltering
+ * */
+enum class BorderTransformEnum : u_int8_t
+{
+  SQUARE_BORDER_TRANSFORM = 0,
+  DISK_BORDER_TRANSFORM
+};
+
+/**\class BorderPickEnum
+ * \ingroup ITKQuadEdgeMeshFiltering
+ * */
+enum class BorderPickEnum : u_int8_t
+{
+  LONGEST = 0,
+  LARGEST
+};
+
 /**
  * \class BorderQuadEdgeMeshFilter
  * \brief Transform one border of a QuadEdgeMesh into either a circle
@@ -105,23 +124,20 @@ public:
   using BoundaryRepresentativeEdgesType = QuadEdgeMeshBoundaryEdgesMeshFunction<InputMeshType>;
   using BoundaryRepresentativeEdgesPointer = typename BoundaryRepresentativeEdgesType::Pointer;
 
-  enum BorderTransformType
-  {
-    SQUARE_BORDER_TRANSFORM = 0,
-    DISK_BORDER_TRANSFORM
-  };
+#if !defined(ITK_LEGACY_REMOVE)
+  /** Exposes enums values for backwards compatibility*/
+  static constexpr BorderTransformEnum SQUARE_BORDER_TRANSFORM = BorderTransformEnum::SQUARE_BORDER_TRANSFORM;
+  static constexpr BorderTransformEnum DISK_BORDER_TRANSFORM = BorderTransformEnum::DISK_BORDER_TRANSFORM;
 
-  enum BorderPickType
-  {
-    LONGEST = 0,
-    LARGEST
-  };
+  static constexpr BorderPickEnum LONGEST = BorderPickEnum::LONGEST;
+  static constexpr BorderPickEnum LARGEST = BorderPickEnum::LARGEST;
+#endif
 
-  itkSetMacro(TransformType, BorderTransformType);
-  itkGetConstMacro(TransformType, BorderTransformType);
+  itkSetEnumMacro(TransformType, BorderTransformEnum);
+  itkGetConstMacro(TransformType, BorderTransformEnum);
 
-  itkSetMacro(BorderPick, BorderPickType);
-  itkGetConstMacro(BorderPick, BorderPickType);
+  itkSetEnumMacro(BorderPick, BorderPickEnum);
+  itkGetConstMacro(BorderPick, BorderPickEnum);
 
   itkSetMacro(Radius, InputCoordRepType);
   itkGetConstMacro(Radius, InputCoordRepType);
@@ -143,8 +159,8 @@ protected:
   void
   PrintSelf(std::ostream & os, Indent indent) const override;
 
-  BorderTransformType m_TransformType;
-  BorderPickType      m_BorderPick;
+  BorderTransformEnum m_TransformType;
+  BorderPickEnum      m_BorderPick;
 
   InputCoordRepType m_Radius;
 
@@ -176,6 +192,41 @@ protected:
   void
   ArcLengthSquareTransform();
 };
+
+
+/** Define how to print enumerations */
+inline std::ostream &
+operator<<(std::ostream & out, const BorderTransformEnum value)
+{
+  return out << [value] {
+    switch (value)
+    {
+      case BorderTransformEnum::SQUARE_BORDER_TRANSFORM:
+        return "BorderTransformEnum::SQUARE_BORDER_TRANSFORM";
+      case BorderTransformEnum::DISK_BORDER_TRANSFORM:
+        return "BorderTransformEnum::DISK_BORDER_TRANSFORM";
+      default:
+        return "INVALID VALUE FOR BorderTransformEnum";
+    }
+  }();
+}
+
+inline std::ostream &
+operator<<(std::ostream & out, const BorderPickEnum value)
+{
+  return out << [value] {
+    switch (value)
+    {
+      case BorderPickEnum::LONGEST:
+        return "BorderPickEnum::LONGEST";
+      case BorderPickEnum::LARGEST:
+        return "BorderPickEnum::LARGEST";
+      default:
+        return "INVALID VALUE FOR BorderPickEnum";
+    }
+  }();
+}
+
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION

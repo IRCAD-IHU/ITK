@@ -57,7 +57,11 @@ public:
   using MeshType = typename Superclass::MeshType;
   using OutputType = typename Superclass::OutputType;
 
-  enum EdgeStatusType
+  /***\class EdgeStatusEnum
+   * \ingroup ITKQuadEdgeMesh
+   * Status of edge
+   */
+  enum class EdgeStatusEnum : u_int8_t
   {
     STANDARD_CONFIG = 0,
     EDGE_NULL,
@@ -67,7 +71,17 @@ public:
     NON_TRIANGULAR_LEFT_FACE,
     EXISTING_OPPOSITE_EDGE
   };
-
+#if !defined(ITK_LEGACY_REMOVE)
+  // We need to expose the enum values at the class level
+  // for backwards compatibility
+  static constexpr EdgeStatusEnum STANDARD_CONFIG = EdgeStatusEnum::STANDARD_CONFIG;
+  static constexpr EdgeStatusEnum EDGE_NULL = EdgeStatusEnum::EDGE_NULL;
+  static constexpr EdgeStatusEnum MESH_NULL = EdgeStatusEnum::MESH_NULL;
+  static constexpr EdgeStatusEnum NON_INTERNAL_EDGE = EdgeStatusEnum::NON_INTERNAL_EDGE;
+  static constexpr EdgeStatusEnum NON_TRIANGULAR_RIGHT_FACE = EdgeStatusEnum::NON_TRIANGULAR_RIGHT_FACE;
+  static constexpr EdgeStatusEnum NON_TRIANGULAR_LEFT_FACE = EdgeStatusEnum::NON_TRIANGULAR_LEFT_FACE;
+  static constexpr EdgeStatusEnum EXISTING_OPPOSITE_EDGE = EdgeStatusEnum::EXISTING_OPPOSITE_EDGE;
+#endif
   /** Evaluate at the specified input position */
   virtual OutputType
   Evaluate(QEType * h);
@@ -81,7 +95,7 @@ protected:
   void
   PrintSelf(std::ostream & os, Indent indent) const override;
 
-  EdgeStatusType m_EdgeStatus;
+  EdgeStatusEnum m_EdgeStatus;
 
   void
   CheckStatus(QEType * h);

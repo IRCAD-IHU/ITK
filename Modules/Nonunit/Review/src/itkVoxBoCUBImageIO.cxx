@@ -289,17 +289,17 @@ template <typename TPixel>
 class VoxBoCUBImageIOSwapHelper
 {
 public:
-  using ByteOrder = ImageIOBase::ByteOrder;
+  using ByteOrder = ByteOrderEnum;
   using BufferSizeType = ImageIOBase::BufferSizeType;
 
   static void
   SwapIfNecessary(void * buffer, BufferSizeType numberOfBytes, ByteOrder dataByteOrder)
   {
-    if (dataByteOrder == ImageIOBase::LittleEndian)
+    if (dataByteOrder == ByteOrderEnum::LittleEndian)
     {
       ByteSwapper<TPixel>::SwapRangeFromSystemToLittleEndian((TPixel *)buffer, numberOfBytes / sizeof(TPixel));
     }
-    else if (dataByteOrder == ImageIOBase::BigEndian)
+    else if (dataByteOrder == ByteOrderEnum::BigEndian)
     {
       ByteSwapper<TPixel>::SwapRangeFromSystemToBigEndian((TPixel *)buffer, numberOfBytes / sizeof(TPixel));
     }
@@ -326,7 +326,7 @@ const char * VoxBoCUBImageIO::m_VB_DATATYPE_DOUBLE = "Double";
 VoxBoCUBImageIO::VoxBoCUBImageIO()
 {
   InitializeOrientationMap();
-  m_ByteOrder = BigEndian;
+  m_ByteOrder = ByteOrderEnum::BigEndian;
   m_Reader = nullptr;
   m_Writer = nullptr;
 }
@@ -538,22 +538,22 @@ VoxBoCUBImageIO::ReadImageInformation()
       {
         std::string type;
         iss >> type;
-        m_PixelType = SCALAR;
+        m_PixelType = IOPixelEnum::SCALAR;
         if (type == m_VB_DATATYPE_BYTE)
         {
           m_ComponentType = UCHAR;
         }
         else if (type == m_VB_DATATYPE_INT)
         {
-          m_ComponentType = USHORT;
+          m_ComponentType = IOComponentEnum::USHORT;
         }
         else if (type == m_VB_DATATYPE_FLOAT)
         {
-          m_ComponentType = FLOAT;
+          m_ComponentType = IOComponentEnum::FLOAT;
         }
         else if (type == m_VB_DATATYPE_DOUBLE)
         {
-          m_ComponentType = DOUBLE;
+          m_ComponentType = IOComponentEnum::DOUBLE;
         }
       }
 
@@ -649,18 +649,18 @@ VoxBoCUBImageIO ::WriteImageInformation()
   // Write the data type
   switch (m_ComponentType)
   {
-    case CHAR:
-    case UCHAR:
+    case IOComponentEnum::CHAR:
+    case IOComponentEnum::UCHAR:
       header << m_VB_DATATYPE << ":\t" << m_VB_DATATYPE_BYTE << std::endl;
       break;
-    case SHORT:
-    case USHORT:
+    case IOComponentEnum::SHORT:
+    case IOComponentEnum::USHORT:
       header << m_VB_DATATYPE << ":\t" << m_VB_DATATYPE_INT << std::endl;
       break;
-    case FLOAT:
+    case IOComponentEnum::FLOAT:
       header << m_VB_DATATYPE << ":\t" << m_VB_DATATYPE_FLOAT << std::endl;
       break;
-    case DOUBLE:
+    case IOComponentEnum::DOUBLE:
       header << m_VB_DATATYPE << ":\t" << m_VB_DATATYPE_DOUBLE << std::endl;
       break;
     default:
@@ -752,7 +752,7 @@ void
 VoxBoCUBImageIO::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);
-  os << indent << "PixelType " << m_PixelType << "\n";
+  os << indent << "PixelType " << itkExposeEnumValue(m_PixelType) << "\n";
 }
 
 bool

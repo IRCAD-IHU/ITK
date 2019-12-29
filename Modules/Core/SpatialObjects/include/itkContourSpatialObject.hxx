@@ -164,7 +164,7 @@ ContourSpatialObject<TDimension>::PrintSelf(std::ostream & os, Indent indent) co
 {
   os << indent << "ContourSpatialObject(" << this << ")" << std::endl;
   os << indent << "#Control Points: " << static_cast<SizeValueType>(m_ControlPoints.size()) << std::endl;
-  os << indent << "Interpolation type: " << m_InterpolationMethod << std::endl;
+  os << indent << "Interpolation type: " << itkExposeEnumValue(m_InterpolationMethod) << std::endl;
   os << indent << "Contour closed: " << m_IsClosed << std::endl;
   os << indent << "Orientation In Object Space: " << m_OrientationInObjectSpace << std::endl;
   os << indent << "Orientation time: " << m_OrientationInObjectSpaceMTime << std::endl;

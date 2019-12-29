@@ -42,7 +42,7 @@ void
 MultiGradientOptimizerv4Template<TInternalComputationValueType>::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);
-  os << indent << "Stop condition:" << this->m_StopCondition << std::endl;
+  os << indent << "Stop condition:" << itkExposeEnumValue(this->m_StopCondition) << std::endl;
   os << indent << "Stop condition description: " << this->m_StopConditionDescription.str() << std::endl;
 }
 

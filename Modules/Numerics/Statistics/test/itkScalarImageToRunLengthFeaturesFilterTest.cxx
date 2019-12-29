@@ -323,8 +323,8 @@ itkScalarImageToRunLengthFeaturesFilterTest(int, char *[])
 
     RunLengthFilterType::FeatureNameVectorPointer requestedFeatures = RunLengthFilterType::FeatureNameVector::New();
 
-    requestedFeatures->push_back(RunLengthFeaturesFilterType::ShortRunEmphasis);
-    requestedFeatures->push_back(RunLengthFeaturesFilterType::GreyLevelNonuniformity);
+    requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::ShortRunEmphasis);
+    requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::GreyLevelNonuniformity);
     texFilter->SetRequestedFeatures(requestedFeatures);
 
     texFilter->Print(std::cout, 3);
@@ -341,7 +341,7 @@ itkScalarImageToRunLengthFeaturesFilterTest(int, char *[])
     }
     fIt++;
 
-    if (fIt.Value() != RunLengthFeaturesFilterType::GreyLevelNonuniformity)
+    if (fIt.Value() != RunLengthFeaturesFilterType::RunLengthFeatureEnum::GreyLevelNonuniformity)
     {
       std::cerr << "Requested feature name not correctly set" << std::endl;
       passed = false;

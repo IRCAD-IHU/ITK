@@ -321,7 +321,7 @@ itkReadWriteSpatialObjectTest(int argc, char * argv[])
   // Define a contour
   ContourType::Pointer contour = ContourType::New();
   contour->GetProperty().SetName("My First Contour");
-  contour->SetInterpolationMethod(ContourType::InterpolationMethodType::EXPLICIT_INTERPOLATION);
+  contour->SetInterpolationMethod(ContourType::InterpolationMethodEnum::EXPLICIT_INTERPOLATION);
   contour->SetIsClosed(true);
   contour->SetAttachedToSlice(50);
 

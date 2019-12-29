@@ -29,7 +29,7 @@ int
 itkFloatingPointExceptionsTest(int argc, char * argv[])
 {
   itk::FloatingPointExceptions::Enable();
-  itk::FloatingPointExceptions::SetExceptionAction(itk::FloatingPointExceptions::EXIT);
+  itk::FloatingPointExceptions::SetExceptionAction(itk::FloatingPointExceptions::ExceptionActionEnum::EXIT);
   if (argc < 2)
   {
     std::cout << "No test specified" << std::endl;

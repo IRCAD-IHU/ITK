@@ -56,7 +56,7 @@ ESMDemonsRegistrationFunction<TFixedImage, TMovingImage, TDisplacementField>::ES
   // Gradient orientation will be taken care of explicitly
   m_MappedMovingImageGradientCalculator->UseImageDirectionOff();
 
-  this->m_UseGradientType = Symmetric;
+  this->m_UseGradientType = GradientEnum::Symmetric;
 
   typename DefaultInterpolatorType::Pointer interp = DefaultInterpolatorType::New();
 
@@ -86,7 +86,7 @@ ESMDemonsRegistrationFunction<TFixedImage, TMovingImage, TDisplacementField>::Pr
   Superclass::PrintSelf(os, indent);
 
   os << indent << "UseGradientType: ";
-  os << m_UseGradientType << std::endl;
+  os << itkExposeEnumValue(m_UseGradientType) << std::endl;
   os << indent << "MaximumUpdateStepLength: ";
   os << m_MaximumUpdateStepLength << std::endl;
 

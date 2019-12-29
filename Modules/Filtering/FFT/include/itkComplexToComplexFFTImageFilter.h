@@ -78,12 +78,19 @@ public:
   static Pointer
   New();
 
-  /** Transform Direction */
-  enum TransformDirectionType
+  /** \class TransformDirectionEnum
+   * \ingroup FourierTransform
+   * */
+  enum class TransformDirectionEnum : u_int8_t
   {
     FORWARD = 1,
     INVERSE = 2
   };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr TransformDirectionEnum FORWARD = TransformDirectionEnum::FORWARD;
+  static constexpr TransformDirectionEnum INVERSE = TransformDirectionEnum::INVERSE;
+#endif
 
   /** Image type type alias support */
   using ImageSizeType = typename ImageType::SizeType;
@@ -92,19 +99,19 @@ public:
    * By selecting FORWARD, this filter will perform a direct, i.e. forward, Fourier Transform,
    * By selecting INVERSE, this filter will perform an inverse, i.e. backward, Fourier Transform,
    */
-  itkSetMacro(TransformDirection, TransformDirectionType);
-  itkGetConstMacro(TransformDirection, TransformDirectionType);
+  itkSetEnumMacro(TransformDirection, TransformDirectionEnum);
+  itkGetConstMacro(TransformDirection, TransformDirectionEnum);
 
 protected:
   ComplexToComplexFFTImageFilter()
-    : m_TransformDirection(FORWARD)
+    : m_TransformDirection(TransformDirectionEnum::FORWARD)
   {}
 
   void
   GenerateInputRequestedRegion() override;
 
 private:
-  TransformDirectionType m_TransformDirection;
+  TransformDirectionEnum m_TransformDirection;
 };
 
 } // end namespace itk

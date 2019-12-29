@@ -213,7 +213,8 @@ itkMultiScaleHessianBasedMeasureImageFilterTest(int argc, char * argv[])
   if (argc > 9)
   {
     // Change sigma step to equispaced type and regnerate vesselness image
-    multiScaleEnhancementFilter->SetSigmaStepMethod(MultiScaleEnhancementFilterType::EquispacedSigmaSteps);
+    multiScaleEnhancementFilter->SetSigmaStepMethod(
+      MultiScaleEnhancementFilterType::SigmaStepMethodEnum::EquispacedSigmaSteps);
 
     try
     {

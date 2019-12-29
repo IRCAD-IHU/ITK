@@ -30,7 +30,7 @@ DiscreteGaussianDerivativeImageFunction<TInputImage, TOutput>::DiscreteGaussianD
   , m_MaximumKernelWidth(30)
   , m_NormalizeAcrossScale(true)
   , m_UseImageSpacing(true)
-  , m_InterpolationMode(NearestNeighbourInterpolation)
+  , m_InterpolationMode(InterpolationModeEnum::NearestNeighbourInterpolation)
 {
   m_Variance.Fill(1.0);
   m_Order.Fill(0);
@@ -50,7 +50,7 @@ DiscreteGaussianDerivativeImageFunction<TInputImage, TOutput>::PrintSelf(std::os
   os << indent << "Order: " << m_Order << std::endl;
   os << indent << "MaximumError: " << m_MaximumError << std::endl;
   os << indent << "MaximumKernelWidth: " << m_MaximumKernelWidth << std::endl;
-  os << indent << "InterpolationMode: " << m_InterpolationMode << std::endl;
+  os << indent << "InterpolationMode: " << itkExposeEnumValue(m_InterpolationMode) << std::endl;
   os << indent << "OperatorArray: " << m_OperatorArray << std::endl;
   os << indent << "DerivativeKernel: " << m_DerivativeKernel << std::endl;
   os << indent << "OperatorImageFunction: " << m_OperatorImageFunction << std::endl;
@@ -180,7 +180,7 @@ template <typename TInputImage, typename TOutput>
 typename DiscreteGaussianDerivativeImageFunction<TInputImage, TOutput>::OutputType
 DiscreteGaussianDerivativeImageFunction<TInputImage, TOutput>::Evaluate(const PointType & point) const
 {
-  if (m_InterpolationMode == NearestNeighbourInterpolation)
+  if (m_InterpolationMode == InterpolationModeEnum::NearestNeighbourInterpolation)
   {
     IndexType index;
     this->ConvertPointToNearestIndex(point, index);
@@ -200,7 +200,7 @@ typename DiscreteGaussianDerivativeImageFunction<TInputImage, TOutput>::OutputTy
 DiscreteGaussianDerivativeImageFunction<TInputImage, TOutput>::EvaluateAtContinuousIndex(
   const ContinuousIndexType & cindex) const
 {
-  if (m_InterpolationMode == NearestNeighbourInterpolation)
+  if (m_InterpolationMode == InterpolationModeEnum::NearestNeighbourInterpolation)
   {
     IndexType index;
     this->ConvertContinuousIndexToNearestIndex(cindex, index);

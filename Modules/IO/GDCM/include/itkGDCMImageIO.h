@@ -117,8 +117,8 @@ public:
   /** Set/Get the original component type of the image. This differs from
    * ComponentType which may change as a function of rescale slope and
    * intercept. */
-  itkGetEnumMacro(InternalComponentType, IOComponentType);
-  itkSetEnumMacro(InternalComponentType, IOComponentType);
+  itkGetEnumMacro(InternalComponentType, IOComponentEnum);
+  itkSetEnumMacro(InternalComponentType, IOComponentEnum);
 
   /*-------- This part of the interfaces deals with writing data. ----- */
 
@@ -326,7 +326,6 @@ public:
 #endif
 
   /** \class CompressionEnum
-   *
    * \ingroup ITKIOGDCM
    * Set/Get a compression type to use. */
   enum class CompressionEnum : uint8_t
@@ -399,8 +398,8 @@ private:
   unsigned int    m_GlobalNumberOfDimensions;
   CompressionEnum m_CompressionType;
 
-  ImageIOBase::IOComponentType m_InternalComponentType;
-  InternalHeader *             m_DICOMHeader;
+  IOComponentEnum  m_InternalComponentType;
+  InternalHeader * m_DICOMHeader;
 };
 
 // Define how to print enumeration

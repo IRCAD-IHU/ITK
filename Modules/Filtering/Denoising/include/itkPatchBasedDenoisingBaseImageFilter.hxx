@@ -26,9 +26,9 @@ namespace itk
 
 template <typename TInputImage, typename TOutputImage>
 PatchBasedDenoisingBaseImageFilter<TInputImage, TOutputImage>::PatchBasedDenoisingBaseImageFilter()
-  : m_NoiseModel(NOMODEL)
-  , m_ComponentSpace(EUCLIDEAN)
-  , m_State(UNINITIALIZED)
+  : m_NoiseModel(NoiseModelEnum::NOMODEL)
+  , m_ComponentSpace(ComponentSpaceEnum::EUCLIDEAN)
+  , m_State(FilterStateEnum::UNINITIALIZED)
 {
   m_InputImage = nullptr;
   m_OutputImage = nullptr;
@@ -38,14 +38,14 @@ template <typename TInputImage, typename TOutputImage>
 void
 PatchBasedDenoisingBaseImageFilter<TInputImage, TOutputImage>::SetStateToInitialized()
 {
-  this->SetState(INITIALIZED);
+  this->SetState(FilterStateEnum::INITIALIZED);
 }
 
 template <typename TInputImage, typename TOutputImage>
 void
 PatchBasedDenoisingBaseImageFilter<TInputImage, TOutputImage>::SetStateToUninitialized()
 {
-  this->SetState(UNINITIALIZED);
+  this->SetState(FilterStateEnum::UNINITIALIZED);
 }
 
 template <typename TInputImage, typename TOutputImage>
@@ -61,7 +61,7 @@ template <typename TInputImage, typename TOutputImage>
 void
 PatchBasedDenoisingBaseImageFilter<TInputImage, TOutputImage>::GenerateData()
 {
-  if (this->GetState() == UNINITIALIZED)
+  if (this->GetState() == FilterStateEnum::UNINITIALIZED)
   {
     // Allocate the output image
     this->AllocateOutputs();
@@ -258,7 +258,7 @@ PatchBasedDenoisingBaseImageFilter<TInputImage, TOutputImage>::PrintSelf(std::os
 {
   Superclass::PrintSelf(os, indent);
 
-  os << indent << "State: " << m_State << std::endl;
+  os << indent << "State: " << itkExposeEnumValue(m_State) << std::endl;
   os << indent << "PatchRadius: " << m_PatchRadius << std::endl;
   if (m_KernelBandwidthEstimation)
   {
@@ -275,15 +275,15 @@ PatchBasedDenoisingBaseImageFilter<TInputImage, TOutputImage>::PrintSelf(std::os
 
   if (m_NoiseModel == Self::GAUSSIAN)
   {
-    os << indent << "NoiseModel: GAUSSIAN" << std::endl;
+    os << indent << "NoiseModelEnum: GAUSSIAN" << std::endl;
   }
   else if (m_NoiseModel == Self::RICIAN)
   {
-    os << indent << "NoiseModel: RICIAN" << std::endl;
+    os << indent << "NoiseModelEnum: RICIAN" << std::endl;
   }
   else if (m_NoiseModel == Self::POISSON)
   {
-    os << indent << "NoiseModel: POISSON" << std::endl;
+    os << indent << "NoiseModelEnum: POISSON" << std::endl;
   }
   else
   {}

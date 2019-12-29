@@ -106,13 +106,21 @@ protected:
 private:
   FRPROptimizer(const FRPROptimizer &) = delete;
 
-  typedef enum
+  /**\class OptimizationEnum
+   * \ingroup ITKOptimizers
+   * */
+  enum class OptimizationEnum : uint8_t
   {
     FletchReeves,
     PolakRibiere
-  } OptimizationType;
+  };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr OptimizationEnum FletchReeves = OptimizationEnum::FletchReeves;
+  static constexpr OptimizationEnum PolakRibiere = OptimizationEnum::PolakRibiere;
+#endif
 
-  OptimizationType m_OptimizationType;
+  OptimizationEnum m_OptimizationType;
 
   bool m_UseUnitLengthGradient;
 }; // end of class

@@ -58,6 +58,7 @@ public:
     WriteMode
   };
 #if !defined(ITK_LEGACY_REMOVE)
+  using FileModeType = FileModeEnum;
   // We need to expose the enum values at the class level
   // for backwards compatibility
   static constexpr FileModeEnum ReadMode = FileModeEnum::ReadMode;

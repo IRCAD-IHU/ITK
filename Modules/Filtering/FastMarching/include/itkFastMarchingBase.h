@@ -152,21 +152,26 @@ public:
   using PriorityQueuePointer = typename PriorityQueueType::Pointer;
   */
 
-  /** \enum TopologyCheckType */
-  enum TopologyCheckType
+  /** \class TopologyCheckEnum
+   * \ingroup ITKFastMarching
+   * */
+  enum class TopologyCheckEnum : u_int8_t
   {
-    /** \c Nothing */
     Nothing = 0,
-    /** \c NoHandles */
     NoHandles,
-    /** \c Strict */
     Strict
   };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr TopologyCheckEnum Nothing = TopologyCheckEnum::Nothing;
+  static constexpr TopologyCheckEnum NoHandles = TopologyCheckEnum::NoHandles;
+  static constexpr TopologyCheckEnum Strict = TopologyCheckEnum::Strict;
+#endif
 
   /** Set/Get the TopologyCheckType macro indicating whether the user
   wants to check topology (and which one). */
-  itkSetMacro(TopologyCheck, TopologyCheckType);
-  itkGetConstReferenceMacro(TopologyCheck, TopologyCheckType);
+  itkSetEnumMacro(TopologyCheck, TopologyCheckEnum);
+  itkGetConstReferenceMacro(TopologyCheck, TopologyCheckEnum);
 
   /** Set/Get TrialPoints */
   itkSetObjectMacro(TrialPoints, NodePairContainerType);
@@ -241,7 +246,7 @@ protected:
 
   PriorityQueueType m_Heap;
 
-  TopologyCheckType m_TopologyCheck;
+  TopologyCheckEnum m_TopologyCheck;
 
   /** \brief Get the total number of nodes in the domain */
   virtual IdentifierType
@@ -255,7 +260,7 @@ protected:
   virtual void
   SetOutputValue(OutputDomainType * oDomain, const NodeType & iNode, const OutputPixelType & iValue) = 0;
 
-  /** \brief Get the LabelType Value for a given node
+  /** \brief Get the LabelEnum Value for a given node
     \param[in] iNode
     \return its label value  */
   virtual unsigned char

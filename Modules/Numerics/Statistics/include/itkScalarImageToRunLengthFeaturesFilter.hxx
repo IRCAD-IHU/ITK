@@ -47,16 +47,16 @@ ScalarImageToRunLengthFeaturesFilter<TImage, THistogramFrequencyContainer>::Scal
   FeatureNameVectorPointer requestedFeatures = FeatureNameVector::New();
   // can't directly set this->m_RequestedFeatures since it is const!
 
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::ShortRunEmphasis);
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::LongRunEmphasis);
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::GreyLevelNonuniformity);
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthNonuniformity);
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::LowGreyLevelRunEmphasis);
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::HighGreyLevelRunEmphasis);
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::ShortRunLowGreyLevelEmphasis);
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::ShortRunHighGreyLevelEmphasis);
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::LongRunLowGreyLevelEmphasis);
-  requestedFeatures->push_back(RunLengthFeaturesFilterType::LongRunHighGreyLevelEmphasis);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::ShortRunEmphasis);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::LongRunEmphasis);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::GreyLevelNonuniformity);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::RunLengthNonuniformity);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::LowGreyLevelRunEmphasis);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::HighGreyLevelRunEmphasis);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::ShortRunLowGreyLevelEmphasis);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::ShortRunHighGreyLevelEmphasis);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::LongRunLowGreyLevelEmphasis);
+  requestedFeatures->push_back(RunLengthFeaturesFilterType::RunLengthFeatureEnum::LongRunHighGreyLevelEmphasis);
 
   this->SetRequestedFeatures(requestedFeatures);
 
@@ -119,7 +119,7 @@ ScalarImageToRunLengthFeaturesFilter<TImage, THistogramFrequencyContainer>::Full
   // For each offset, calculate each feature
   typename OffsetVector::ConstIterator offsetIt;
   size_t                               offsetNum, featureNum;
-  using InternalRunLengthFeatureName = typename RunLengthFeaturesFilterType::RunLengthFeatureName;
+  using InternalRunLengthFeatureName = typename RunLengthFeaturesFilterType::RunLengthFeatureEnum;
 
   for (offsetIt = this->m_Offsets->Begin(), offsetNum = 0; offsetIt != this->m_Offsets->End(); ++offsetIt, offsetNum++)
   {
@@ -215,7 +215,7 @@ ScalarImageToRunLengthFeaturesFilter<TImage, THistogramFrequencyContainer>::Fast
   runLengthMatrixCalculator->SetInput(this->m_RunLengthMatrixGenerator->GetOutput());
   runLengthMatrixCalculator->Update();
 
-  using InternalRunLengthFeatureName = typename RunLengthFeaturesFilterType::RunLengthFeatureName;
+  using InternalRunLengthFeatureName = typename RunLengthFeaturesFilterType::RunLengthFeatureEnum;
   this->m_FeatureMeans->clear();
   this->m_FeatureStandardDeviations->clear();
   typename FeatureNameVector::ConstIterator fnameIt;

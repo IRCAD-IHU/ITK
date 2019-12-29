@@ -201,9 +201,10 @@ public:
 
   const MeasurementObjectType *
   GetHaralickCorrelationOutput() const;
-
-  /** Texture feature types */
-  typedef enum
+  /**\class TextureFeatureEnum
+   * \ingroup ITKStatistics
+   * Texture feature types */
+  enum class TextureFeatureEnum : uint8_t
   {
     Energy,
     Entropy,
@@ -214,11 +215,23 @@ public:
     ClusterProminence,
     HaralickCorrelation,
     InvalidFeatureName
-  } TextureFeatureName;
+  };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr TextureFeatureEnum Energy = TextureFeatureEnum::Energy;
+  static constexpr TextureFeatureEnum Entropy = TextureFeatureEnum::Entropy;
+  static constexpr TextureFeatureEnum Correlation = TextureFeatureEnum::Correlation;
+  static constexpr TextureFeatureEnum InverseDifferenceMoment = TextureFeatureEnum::InverseDifferenceMoment;
+  static constexpr TextureFeatureEnum Inertia = TextureFeatureEnum::Inertia;
+  static constexpr TextureFeatureEnum ClusterShade = TextureFeatureEnum::ClusterShade;
+  static constexpr TextureFeatureEnum ClusterProminence = TextureFeatureEnum::ClusterProminence;
+  static constexpr TextureFeatureEnum HaralickCorrelation = TextureFeatureEnum::HaralickCorrelation;
+  static constexpr TextureFeatureEnum InvalidFeatureName = TextureFeatureEnum::InvalidFeatureName;
+#endif
 
   /** convenience method to access the texture values */
   MeasurementType
-  GetFeature(TextureFeatureName name);
+  GetFeature(TextureFeatureEnum name);
 
 protected:
   HistogramToTextureFeaturesFilter();

@@ -48,12 +48,12 @@ ScalarImageToTextureFeaturesFilter<TImage, THistogramFrequencyContainer>::Scalar
   // ClusterProminence}
   FeatureNameVectorPointer requestedFeatures = FeatureNameVector::New();
   // can't directly set m_RequestedFeatures since it is const!
-  requestedFeatures->push_back(TextureFeaturesFilterType::Energy);
-  requestedFeatures->push_back(TextureFeaturesFilterType::Entropy);
-  requestedFeatures->push_back(TextureFeaturesFilterType::InverseDifferenceMoment);
-  requestedFeatures->push_back(TextureFeaturesFilterType::Inertia);
-  requestedFeatures->push_back(TextureFeaturesFilterType::ClusterShade);
-  requestedFeatures->push_back(TextureFeaturesFilterType::ClusterProminence);
+  requestedFeatures->push_back(TextureFeaturesFilterType::TextureFeatureEnum::Energy);
+  requestedFeatures->push_back(TextureFeaturesFilterType::TextureFeatureEnum::Entropy);
+  requestedFeatures->push_back(TextureFeaturesFilterType::TextureFeatureEnum::InverseDifferenceMoment);
+  requestedFeatures->push_back(TextureFeaturesFilterType::TextureFeatureEnum::Inertia);
+  requestedFeatures->push_back(TextureFeaturesFilterType::TextureFeatureEnum::ClusterShade);
+  requestedFeatures->push_back(TextureFeaturesFilterType::TextureFeatureEnum::ClusterProminence);
   this->SetRequestedFeatures(requestedFeatures);
 
   // Set the offset directions to their defaults: half of all the possible
@@ -116,7 +116,7 @@ ScalarImageToTextureFeaturesFilter<TImage, THistogramFrequencyContainer>::FullCo
   // For each offset, calculate each feature
   typename OffsetVector::ConstIterator offsetIt;
   size_t                               offsetNum, featureNum;
-  using InternalTextureFeatureName = typename TextureFeaturesFilterType::TextureFeatureName;
+  using InternalTextureFeatureName = typename TextureFeaturesFilterType::TextureFeatureEnum;
 
   for (offsetIt = m_Offsets->Begin(), offsetNum = 0; offsetIt != m_Offsets->End(); ++offsetIt, offsetNum++)
   {
@@ -204,7 +204,7 @@ ScalarImageToTextureFeaturesFilter<TImage, THistogramFrequencyContainer>::FastCo
   this->m_GLCMGenerator->SetOffset(offsetIt.Value());
   this->m_GLCMCalculator->Update();
 
-  using InternalTextureFeatureName = typename TextureFeaturesFilterType::TextureFeatureName;
+  using InternalTextureFeatureName = typename TextureFeaturesFilterType::TextureFeatureEnum;
   m_FeatureMeans->clear();
   m_FeatureStandardDeviations->clear();
   typename FeatureNameVector::ConstIterator fnameIt;

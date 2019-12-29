@@ -138,13 +138,13 @@ protected:
 
   /** Convenient method to read a buffer as ASCII text. */
   void
-  ReadBufferAsASCII(std::istream & os, void * buffer, IOComponentType ctype, SizeType numberOfBytesToBeRead) override;
+  ReadBufferAsASCII(std::istream & os, void * buffer, IOComponentEnum ctype, SizeType numberOfBytesToBeRead) override;
 
   /** Convenient method to write a buffer as ASCII text. */
   void
   WriteBufferAsASCII(std::ostream &  os,
                      const void *    buffer,
-                     IOComponentType ctype,
+                     IOComponentEnum ctype,
                      SizeType        numberOfBytesToWrite) override;
 
   /** We have a special method to read symmetric second rank tensors because
@@ -160,7 +160,7 @@ protected:
 private:
   void
               SetPixelTypeFromString(const std::string & pixelType);
-  std::string GetComponentTypeAsString(IOComponentType);
+  std::string GetComponentTypeAsString(IOComponentEnum);
 
   /** Return the number of pixels in the IOregion. */
   SizeType

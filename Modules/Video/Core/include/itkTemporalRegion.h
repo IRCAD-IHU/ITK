@@ -76,7 +76,7 @@ public:
   GetFrameDuration() const;
 
   /** Return RegionType (SRUCTURED_REGION) */
-  RegionType
+  RegionEnum
   GetRegionType() const override;
 
   /** Constructor */

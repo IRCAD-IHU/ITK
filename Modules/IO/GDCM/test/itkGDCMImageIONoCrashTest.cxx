@@ -65,7 +65,7 @@ itkGDCMImageIONoCrashTest(int ac, char * av[])
   }
 
   // Exercise the get methods
-  std::cout << "InternalComponentType: " << gdcmImageIO->GetInternalComponentType() << std::endl;
+  std::cout << "InternalComponentType: " << itkExposeEnumValue(gdcmImageIO->GetInternalComponentType()) << std::endl;
   std::cout << "RescaleSlope: " << gdcmImageIO->GetRescaleSlope() << std::endl;
   std::cout << "RescaleIntercept: " << gdcmImageIO->GetRescaleIntercept() << std::endl;
   std::cout << "UIDPrefix: " << gdcmImageIO->GetUIDPrefix() << std::endl;

@@ -312,7 +312,7 @@ public:
   bool
   IsInsideVirtualDomain(const VirtualIndexType & index) const;
 
-  using MetricCategoryType = typename Superclass::MetricCategoryType;
+  using MetricCategoryType = typename Superclass::MetricCategoryEnum;
 
   /** Get metric category */
   MetricCategoryType

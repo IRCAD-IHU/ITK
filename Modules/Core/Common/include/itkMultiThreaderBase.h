@@ -108,7 +108,8 @@ public:
   itkLegacyMacro(static void SetGlobalDefaultUseThreadPool(const bool GlobalDefaultUseThreadPool));
   itkLegacyMacro(static bool GetGlobalDefaultUseThreadPool());
 
-  /** Currently supported types of multi-threader implementations.
+  /**\class ThreaderEnum
+   * Currently supported types of multi-threader implementations.
    * Last will change with additional implementations. */
   enum class ThreaderEnum : int8_t
   {
@@ -121,6 +122,12 @@ public:
   };
 #if !defined(ITK_LEGACY_REMOVE)
   using ThreaderType = ThreaderEnum;
+  static constexpr ThreaderEnum Platform = ThreaderEnum::Platform;
+  static constexpr ThreaderEnum First = ThreaderEnum::First;
+  static constexpr ThreaderEnum Pool = ThreaderEnum::Pool;
+  static constexpr ThreaderEnum TBB = ThreaderEnum::TBB;
+  static constexpr ThreaderEnum Last = ThreaderEnum::Last;
+  static constexpr ThreaderEnum Unknown = ThreaderEnum::Unknown;
 #endif
 
   /** Convert a threader name into its enum type. */

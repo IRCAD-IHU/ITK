@@ -55,21 +55,21 @@ TemporalDataObject ::GetTemporalUnit() const
 void
 TemporalDataObject ::SetTemporalUnitToFrame()
 {
-  m_TemporalUnit = Frame;
+  m_TemporalUnit = TemporalUnitEnum::Frame;
 }
 
 //----------------------------------------------------------------------------
 void
 TemporalDataObject ::SetTemporalUnitToRealTime()
 {
-  m_TemporalUnit = RealTime;
+  m_TemporalUnit = TemporalUnitEnum::RealTime;
 }
 
 //----------------------------------------------------------------------------
 void
 TemporalDataObject ::SetTemporalUnitToFrameAndRealTime()
 {
-  m_TemporalUnit = FrameAndRealTime;
+  m_TemporalUnit = TemporalUnitEnum::FrameAndRealTime;
 }
 
 //----------------------------------------------------------------------------
@@ -210,15 +210,15 @@ TemporalDataObject ::RequestedRegionIsOutsideOfTheBufferedRegion()
 
   switch (m_TemporalUnit)
   {
-    case Frame:
+    case TemporalUnitEnum::Frame:
     {
       return frameFlag;
     }
-    case RealTime:
+    case TemporalUnitEnum::RealTime:
     {
       return realTimeFlag;
     }
-    case FrameAndRealTime:
+    case TemporalUnitEnum::FrameAndRealTime:
     {
       return frameFlag || realTimeFlag;
     }
@@ -239,15 +239,15 @@ TemporalDataObject ::VerifyRequestedRegion()
   realTimeFlag &= m_RequestedTemporalRegion.GetRealDuration() <= m_LargestPossibleTemporalRegion.GetRealDuration();
   switch (m_TemporalUnit)
   {
-    case Frame:
+    case TemporalUnitEnum::Frame:
     {
       return frameFlag;
     }
-    case RealTime:
+    case TemporalUnitEnum::RealTime:
     {
       return realTimeFlag;
     }
-    case FrameAndRealTime:
+    case TemporalUnitEnum::FrameAndRealTime:
     {
       return frameFlag && realTimeFlag;
     }

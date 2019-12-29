@@ -101,96 +101,98 @@ NrrdImageIO::InternalSetCompressor(const std::string & _compressor)
   this->Superclass::InternalSetCompressor(_compressor);
 }
 
-ImageIOBase::IOComponentType
+IOComponentEnum
 NrrdImageIO::NrrdToITKComponentType(const int nrrdComponentType) const
 {
   switch (nrrdComponentType)
   {
     case nrrdTypeUnknown:
     case nrrdTypeBlock:
-      return UNKNOWNCOMPONENTTYPE;
+      return IOComponentEnum::UNKNOWNCOMPONENTTYPE;
 
     case nrrdTypeChar:
-      return CHAR;
+      return IOComponentEnum::CHAR;
 
     case nrrdTypeUChar:
-      return UCHAR;
+      return IOComponentEnum::UCHAR;
 
     case nrrdTypeShort:
-      return SHORT;
+      return IOComponentEnum::SHORT;
 
     case nrrdTypeUShort:
-      return USHORT;
+      return IOComponentEnum::USHORT;
 
     case nrrdTypeInt:
-      return INT;
+      return IOComponentEnum::INT;
 
     case nrrdTypeUInt:
-      return UINT;
+      return IOComponentEnum::UINT;
 
     case nrrdTypeLLong:
-      return LONGLONG;
+      return IOComponentEnum::LONGLONG;
 
     case nrrdTypeULLong:
-      return ULONGLONG;
+      return IOComponentEnum::ULONGLONG;
 
     case nrrdTypeFloat:
-      return FLOAT;
+      return IOComponentEnum::FLOAT;
 
     case nrrdTypeDouble:
-      return DOUBLE;
+      return IOComponentEnum::DOUBLE;
   }
   // Strictly to avoid compiler warning regarding "control may reach end of
   // non-void function":
-  return UNKNOWNCOMPONENTTYPE;
+  return IOComponentEnum::UNKNOWNCOMPONENTTYPE;
 }
 
 int
-NrrdImageIO::ITKToNrrdComponentType(const ImageIOBase::IOComponentType itkComponentType) const
+NrrdImageIO::ITKToNrrdComponentType(const IOComponentEnum itkComponentType) const
 {
   switch (itkComponentType)
   {
-    case UNKNOWNCOMPONENTTYPE:
+    case IOComponentEnum::UNKNOWNCOMPONENTTYPE:
       return nrrdTypeUnknown;
 
-    case CHAR:
+    case IOComponentEnum::CHAR:
       return nrrdTypeChar;
 
-    case UCHAR:
+    case IOComponentEnum::UCHAR:
       return nrrdTypeUChar;
 
-    case SHORT:
+    case IOComponentEnum::SHORT:
       return nrrdTypeShort;
 
-    case USHORT:
+    case IOComponentEnum::USHORT:
       return nrrdTypeUShort;
 
     // "long" is a silly type because it basically guaranteed not to be
     // cross-platform across 32-vs-64 bit machines, but we can figure out
     // a cross-platform way of storing the information.
-    case LONG:
+    case IOComponentEnum::LONG:
       return (4 == sizeof(long)) ? nrrdTypeInt : nrrdTypeLLong;
 
-    case ULONG:
+    case IOComponentEnum::ULONG:
       return (4 == sizeof(long)) ? nrrdTypeUInt : nrrdTypeULLong;
 
-    case INT:
+    case IOComponentEnum::INT:
       return nrrdTypeInt;
 
-    case UINT:
+    case IOComponentEnum::UINT:
       return nrrdTypeUInt;
 
-    case LONGLONG:
+    case IOComponentEnum::LONGLONG:
       return nrrdTypeLLong;
 
-    case ULONGLONG:
+    case IOComponentEnum::ULONGLONG:
       return nrrdTypeULLong;
 
-    case FLOAT:
+    case IOComponentEnum::FLOAT:
       return nrrdTypeFloat;
 
-    case DOUBLE:
+    case IOComponentEnum::DOUBLE:
       return nrrdTypeDouble;
+    case IOComponentEnum::LDOUBLE:
+      return nrrdTypeUnknown; // Long double not supported by nrrd
   }
   // Strictly to avoid compiler warning regarding "control may reach end of
   // non-void function":
@@ -312,7 +314,7 @@ NrrdImageIO::ReadImageInformation()
     }
     else
     {
-      this->SetByteOrder(ImageIOBase::OrderNotApplicable);
+      this->SetByteOrder(ByteOrderEnum::OrderNotApplicable);
     }
 
     if (nio->encoding == nrrdEncodingAscii)
@@ -325,8 +327,8 @@ NrrdImageIO::ReadImageInformation()
     }
     // set type of pixel components; this is orthogonal to pixel type
 
-    ImageIOBase::IOComponentType cmpType = this->NrrdToITKComponentType(nrrd->type);
-    if (UNKNOWNCOMPONENTTYPE == cmpType)
+    IOComponentEnum cmpType = this->NrrdToITKComponentType(nrrd->type);
+    if (IOComponentEnum::UNKNOWNCOMPONENTTYPE == cmpType)
     {
       itkExceptionMacro("Nrrd type " << airEnumStr(nrrdType, nrrd->type)
                                      << " could not be mapped to an ITK component type");
@@ -351,7 +353,7 @@ NrrdImageIO::ReadImageInformation()
     {
       // we don't have any non-scalar data
       this->SetNumberOfDimensions(nrrd->dim);
-      this->SetPixelType(ImageIOBase::SCALAR);
+      this->SetPixelType(IOPixelEnum::SCALAR);
       this->SetNumberOfComponents(1);
     }
     else if (1 == rangeAxisNum)
@@ -373,17 +375,17 @@ NrrdImageIO::ReadImageInformation()
 
         case nrrdKindStub:
         case nrrdKindScalar:
-          this->SetPixelType(ImageIOBase::SCALAR);
+          this->SetPixelType(IOPixelEnum::SCALAR);
           this->SetNumberOfComponents(size);
           break;
         case nrrdKind3Color:
         case nrrdKindRGBColor:
-          this->SetPixelType(ImageIOBase::RGB);
+          this->SetPixelType(IOPixelEnum::RGB);
           this->SetNumberOfComponents(size);
           break;
         case nrrdKind4Color:
         case nrrdKindRGBAColor:
-          this->SetPixelType(ImageIOBase::RGBA);
+          this->SetPixelType(IOPixelEnum::RGBA);
           this->SetNumberOfComponents(size);
           break;
         case nrrdKindVector:
@@ -391,33 +393,33 @@ NrrdImageIO::ReadImageInformation()
         case nrrdKind3Vector:
         case nrrdKind4Vector:
         case nrrdKindList:
-          this->SetPixelType(ImageIOBase::VECTOR);
+          this->SetPixelType(IOPixelEnum::VECTOR);
           this->SetNumberOfComponents(size);
           break;
         case nrrdKindPoint:
-          this->SetPixelType(ImageIOBase::POINT);
+          this->SetPixelType(IOPixelEnum::POINT);
           this->SetNumberOfComponents(size);
           break;
         case nrrdKindCovariantVector:
         case nrrdKind3Gradient:
         case nrrdKindNormal:
         case nrrdKind3Normal:
-          this->SetPixelType(ImageIOBase::COVARIANTVECTOR);
+          this->SetPixelType(IOPixelEnum::COVARIANTVECTOR);
           this->SetNumberOfComponents(size);
           break;
         case nrrdKind3DSymMatrix:
           // ImageIOBase::DIFFUSIONTENSOR3D is a subclass
-          this->SetPixelType(ImageIOBase::SYMMETRICSECONDRANKTENSOR);
+          this->SetPixelType(IOPixelEnum::SYMMETRICSECONDRANKTENSOR);
           this->SetNumberOfComponents(size);
           break;
         case nrrdKind3DMaskedSymMatrix:
-          this->SetPixelType(ImageIOBase::SYMMETRICSECONDRANKTENSOR);
+          this->SetPixelType(IOPixelEnum::SYMMETRICSECONDRANKTENSOR);
           // NOTE: we will crop out the mask in Read() below; this is the
           // one case where NumberOfComponents != size
           this->SetNumberOfComponents(size - 1);
           break;
         case nrrdKindComplex:
-          this->SetPixelType(ImageIOBase::COMPLEX);
+          this->SetPixelType(IOPixelEnum::COMPLEX);
           this->SetNumberOfComponents(size);
           break;
         case nrrdKindHSVColor:
@@ -429,7 +431,7 @@ NrrdImageIO::ReadImageInformation()
         case nrrdKind2DMaskedMatrix:
         case nrrdKind3DMatrix:
           // for all other Nrrd kinds, we punt and call it a vector
-          this->SetPixelType(ImageIOBase::VECTOR);
+          this->SetPixelType(IOPixelEnum::VECTOR);
           this->SetNumberOfComponents(size);
           break;
         default:
@@ -716,7 +718,7 @@ NrrdImageIO::Read(void * buffer)
   // NOTE the main reason the logic becomes complicated here is that
   // ITK has to be the one to allocate the data segment ("buffer")
 
-  if (ImageIOBase::SYMMETRICSECONDRANKTENSOR == this->GetPixelType())
+  if (IOPixelEnum::SYMMETRICSECONDRANKTENSOR == this->GetPixelType())
   {
     // It may be that this is coming from a nrrdKind3DMaskedSymMatrix,
     // in which case ITK's buffer has not been allocated for the
@@ -805,7 +807,7 @@ NrrdImageIO::Read(void * buffer)
     // In any case, the logic here has the luxury of assuming that the
     // *single* non-scalar axis is the *first* (fastest) axis.
     if (nrrdKind3DMaskedSymMatrix == nrrd->axis[0].kind &&
-        ImageIOBase::SYMMETRICSECONDRANKTENSOR == this->GetPixelType())
+        IOPixelEnum::SYMMETRICSECONDRANKTENSOR == this->GetPixelType())
     {
       // we crop out the mask and put the output in ITK-allocated "buffer"
       size_t size[NRRD_DIM_MAX], minIdx[NRRD_DIM_MAX], maxIdx[NRRD_DIM_MAX];
@@ -892,7 +894,7 @@ NrrdImageIO::Write(const void * buffer)
       case ImageIOBase::COVARIANTVECTOR:
         kind[0] = nrrdKindCovariantVector;
         break;
-      case ImageIOBase::SYMMETRICSECONDRANKTENSOR:
+      case IOPixelEnum::SYMMETRICSECONDRANKTENSOR:
       case ImageIOBase::DIFFUSIONTENSOR3D:
         kind[0] = nrrdKind3DSymMatrix;
         break;
@@ -1076,7 +1078,7 @@ NrrdImageIO::Write(const void * buffer)
   }
   else
   {
-    Superclass::FileType fileType = this->GetFileType();
+    Superclass::FileEnum fileType = this->GetFileType();
     switch (fileType)
     {
       default:
@@ -1091,7 +1093,7 @@ NrrdImageIO::Write(const void * buffer)
   }
 
   // set desired endianness of output
-  Superclass::ByteOrder byteOrder = this->GetByteOrder();
+  Superclass::ByteOrderEnum byteOrder = this->GetByteOrder();
   switch (byteOrder)
   {
     default:

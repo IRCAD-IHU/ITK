@@ -54,7 +54,7 @@ public:
    *  It defines a type used to return the cost function value. */
   using MeasureType = Array<double>;
 
-  /**  GradientType type alias.
+  /**  GradientEnum type alias.
    *  It defines a type used to return the cost function derivative.  */
   using DerivativeType = Array2D<double>;
 

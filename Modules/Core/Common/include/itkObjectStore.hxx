@@ -27,7 +27,7 @@ ObjectStore<TObjectType>::ObjectStore()
 {
   m_Size = 0;
   m_LinearGrowthSize = 1024;
-  m_GrowthStrategy = EXPONENTIAL_GROWTH;
+  m_GrowthStrategy = GrowthStrategyEnum::EXPONENTIAL_GROWTH;
 }
 
 template <typename TObjectType>
@@ -103,7 +103,7 @@ template <typename TObjectType>
 SizeValueType
 ObjectStore<TObjectType>::GetGrowthSize()
 {
-  if ((m_GrowthStrategy == EXPONENTIAL_GROWTH) && (m_Size != 0))
+  if ((m_GrowthStrategy == GrowthStrategyEnum::EXPONENTIAL_GROWTH) && (m_Size != 0))
   {
     return m_Size;
   }
@@ -139,7 +139,7 @@ ObjectStore<TObjectType>::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);
 
-  os << indent << "m_GrowthStrategy: " << m_GrowthStrategy << std::endl;
+  os << indent << "m_GrowthStrategy: " << itkExposeEnumValue(m_GrowthStrategy) << std::endl;
   os << indent << "m_Size: " << m_Size << std::endl;
   os << indent << "m_LinearGrowthSize: " << static_cast<SizeValueType>(m_LinearGrowthSize) << std::endl;
   os << indent << "Free list size: " << static_cast<SizeValueType>(m_FreeList.size()) << std::endl;

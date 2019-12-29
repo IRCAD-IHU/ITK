@@ -228,7 +228,7 @@ NormalQuadEdgeMeshFilter<TInputMesh, TOutputMesh>::PrintSelf(std::ostream & os, 
 {
   Superclass::PrintSelf(os, indent);
 
-  std::cout << indent << "Weight: " << m_Weight << std::endl;
+  std::cout << indent << "Weight: " << itkExposeEnumValue(m_Weight) << std::endl;
 }
 } // namespace itk
 

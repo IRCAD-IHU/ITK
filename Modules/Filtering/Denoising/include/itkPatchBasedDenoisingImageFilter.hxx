@@ -2089,7 +2089,8 @@ PatchBasedDenoisingImageFilter<TInputImage, TOutputImage>::ThreadedComputeImageU
           }
           default:
           {
-            itkExceptionMacro(<< "Unexpected noise model " << this->GetNoiseModel() << " specified.");
+            itkExceptionMacro(<< "Unexpected noise model " << itkExposeEnumValue(this->GetNoiseModel())
+                              << " specified.");
             break;
           }
         }

@@ -577,7 +577,7 @@ FEMScatteredDataPointSetToImageFilter<TInputPointSet,
 
       default:
       {
-        itkExceptionMacro("Do not support element type: " << cell->GetType());
+        itkExceptionMacro("Do not support element type: " << itkExposeEnumValue(cell->GetType()));
         break;
       }
 

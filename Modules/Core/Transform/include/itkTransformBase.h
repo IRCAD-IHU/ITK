@@ -123,6 +123,9 @@ public:
   virtual std::string
   GetTransformTypeAsString() const = 0;
 
+  /**\class TransformCategoryEnum
+   * \ingroup ITKTransform
+   * */
   enum class TransformCategoryEnum : uint8_t
   {
     UnknownTransformCategory = 0,

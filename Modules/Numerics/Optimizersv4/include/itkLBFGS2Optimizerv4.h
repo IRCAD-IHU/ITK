@@ -105,7 +105,11 @@ class ITKOptimizersv4_EXPORT LBFGS2Optimizerv4 : public ObjectToObjectOptimizerB
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(LBFGS2Optimizerv4);
 
-  enum LineSearchMethod
+  /***\class LineSearchMethodEnum
+   * \ingroup ITKOptimizersv4
+   * Line search method enum
+   */
+  enum class LineSearchMethodEnum : uint8_t
   {
     /** The default algorithm (MoreThuente method). */
     LINESEARCH_DEFAULT = 0,
@@ -147,6 +151,18 @@ public:
     LINESEARCH_BACKTRACKING_STRONG_WOLFE = 3,
   };
 
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr LineSearchMethodEnum LINESEARCH_DEFAULT = LineSearchMethodEnum::LINESEARCH_DEFAULT;
+  static constexpr LineSearchMethodEnum LINESEARCH_MORETHUENTE = LineSearchMethodEnum::LINESEARCH_MORETHUENTE;
+  static constexpr LineSearchMethodEnum LINESEARCH_BACKTRACKING_ARMIJO =
+    LineSearchMethodEnum::LINESEARCH_BACKTRACKING_ARMIJO;
+  static constexpr LineSearchMethodEnum LINESEARCH_BACKTRACKING = LineSearchMethodEnum::LINESEARCH_BACKTRACKING;
+  static constexpr LineSearchMethodEnum LINESEARCH_BACKTRACKING_WOLFE =
+    LineSearchMethodEnum::LINESEARCH_BACKTRACKING_WOLFE;
+  static constexpr LineSearchMethodEnum LINESEARCH_BACKTRACKING_STRONG_WOLFE =
+    LineSearchMethodEnum::LINESEARCH_BACKTRACKING_STRONG_WOLFE;
+#endif
 
   /**
    * currently only double is used in lbfgs need to figure
@@ -273,8 +289,8 @@ public:
    * Defaults to More-Thuente's method.
    */
   void
-  SetLineSearch(const LineSearchMethod & linesearch);
-  LineSearchMethod
+  SetLineSearch(const LineSearchMethodEnum & linesearch);
+  LineSearchMethodEnum
   GetLineSearch() const;
 
   /**

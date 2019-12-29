@@ -29,7 +29,7 @@ namespace Statistics
 template <typename TSample>
 ExpectationMaximizationMixtureModelEstimator<TSample>::ExpectationMaximizationMixtureModelEstimator()
   : m_Sample(nullptr)
-  , m_TerminationCode(NOT_CONVERGED)
+  , m_TerminationCode(TERMINATION_CODE_ENUM::NOT_CONVERGED)
   , m_MembershipFunctionsObject(MembershipFunctionVectorObjectType::New())
   , m_MembershipFunctionsWeightArrayObject(MembershipFunctionsWeightsArrayObjectType::New())
 {}
@@ -47,7 +47,7 @@ ExpectationMaximizationMixtureModelEstimator<TSample>::PrintSelf(std::ostream & 
     os << indent << "Component Membership Function[" << i << "]: " << this->GetComponentMembershipFunction(i)
        << std::endl;
   }
-  os << indent << "Termination Code: " << this->GetTerminationCode() << std::endl;
+  os << indent << "Termination Code: " << itkExposeEnumValue(this->GetTerminationCode()) << std::endl;
   os << indent << "Initial Proportions: " << this->GetInitialProportions() << std::endl;
   os << indent << "Proportions: " << this->GetProportions() << std::endl;
   os << indent << "Calculated Expectation: " << this->CalculateExpectation() << std::endl;
@@ -118,7 +118,7 @@ ExpectationMaximizationMixtureModelEstimator<TSample>::GetNumberOfComponents() c
 }
 
 template <typename TSample>
-typename ExpectationMaximizationMixtureModelEstimator<TSample>::TERMINATION_CODE
+typename ExpectationMaximizationMixtureModelEstimator<TSample>::TERMINATION_CODE_ENUM
 ExpectationMaximizationMixtureModelEstimator<TSample>::GetTerminationCode() const
 {
   return m_TerminationCode;
@@ -333,13 +333,13 @@ ExpectationMaximizationMixtureModelEstimator<TSample>::GenerateData()
     }
     else
     {
-      m_TerminationCode = CONVERGED;
+      m_TerminationCode = TERMINATION_CODE_ENUM::CONVERGED;
       break;
     }
     ++iteration;
   }
 
-  m_TerminationCode = NOT_CONVERGED;
+  m_TerminationCode = TERMINATION_CODE_ENUM::NOT_CONVERGED;
 }
 
 template <typename TSample>

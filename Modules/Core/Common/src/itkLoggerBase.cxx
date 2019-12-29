@@ -26,7 +26,7 @@ LoggerBase::LoggerBase()
   this->m_LevelForFlushing = LoggerBase::PriorityLevelEnum::MUSTFLUSH;
   this->m_Clock = RealTimeClock::New();
   this->m_Output = MultipleLogOutput::New();
-  this->m_TimeStampFormat = REALVALUE;
+  this->m_TimeStampFormat = TimeStampFormatEnum::REALVALUE;
   this->m_HumanReadableFormat = "%Y %b %d %H:%M:%S";
 }
 
@@ -71,13 +71,13 @@ LoggerBase ::BuildFormattedEntry(PriorityLevelEnum level, std::string const & co
 
   switch (this->m_TimeStampFormat)
   {
-    case REALVALUE:
+    case TimeStampFormatEnum::REALVALUE:
     {
       s.precision(30);
       s << m_Clock->GetTimeInSeconds();
       break;
     }
-    case HUMANREADABLE:
+    case TimeStampFormatEnum::HUMANREADABLE:
     {
       s << itksys::SystemTools::GetCurrentDateTime(this->m_HumanReadableFormat.c_str());
       break;
@@ -97,7 +97,7 @@ LoggerBase::PrintSelf(std::ostream & os, Indent indent) const
   os << indent << "Name: " << this->GetName() << std::endl;
   os << indent << "PriorityLevel: " << this->GetPriorityLevel() << std::endl;
   os << indent << "LevelForFlushing: " << this->GetLevelForFlushing() << std::endl;
-  os << indent << "TimeStampFormat: " << this->GetTimeStampFormat() << std::endl;
+  os << indent << "TimeStampFormat: " << itkExposeEnumValue(this->GetTimeStampFormat()) << std::endl;
   os << indent << "HumanReadableFormat: " << this->GetHumanReadableFormat() << std::endl;
 }
 

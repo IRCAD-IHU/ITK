@@ -169,8 +169,8 @@ itkContourSpatialObjectTest(int, char *[])
   //
   // Test Set/Get InterpolationType
   //
-  contour->SetInterpolationMethod(SpatialObjectType::InterpolationMethodType::LINEAR_INTERPOLATION);
-  if (contour->GetInterpolationMethod() != SpatialObjectType::InterpolationMethodType::LINEAR_INTERPOLATION)
+  contour->SetInterpolationMethod(SpatialObjectType::InterpolationMethodEnum::LINEAR_INTERPOLATION);
+  if (contour->GetInterpolationMethod() != SpatialObjectType::InterpolationMethodEnum::LINEAR_INTERPOLATION)
   {
     std::cout << "[FAILED] Did not set/retrieve interpolation type correctly" << std::endl;
     return EXIT_FAILURE;
@@ -196,7 +196,7 @@ itkContourSpatialObjectTest(int, char *[])
   interpPointList.push_back(intPt2);
 
   contour->SetControlPoints(interpPointList);
-  contour->SetInterpolationMethod(SpatialObjectType::InterpolationMethodType::NO_INTERPOLATION);
+  contour->SetInterpolationMethod(SpatialObjectType::InterpolationMethodEnum::NO_INTERPOLATION);
   contour->Update();
 
   // check number of points

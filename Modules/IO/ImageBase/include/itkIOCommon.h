@@ -43,7 +43,12 @@ public:
     ITK_MAXPATHLEN = 2048, /**< Maximum length of a filename */
     MAX_FILENAMELIST_SIZE = 512
   } SysConstants;
-  typedef enum
+
+  /**\class AtomicPixelEnum
+   * \ingroup IOFilters
+   * enumerated constants for the different data types
+   */
+  enum class AtomicPixelEnum : uint8_t
   {
     ITK_UCHAR, // aka uint8_t
     ITK_CHAR,
@@ -55,15 +60,29 @@ public:
     ITK_LONG,
     ITK_FLOAT,
     ITK_DOUBLE
-  } AtomicPixelType; // enumerated constants for the different data types
+  };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr AtomicPixelEnum ITK_UCHAR = AtomicPixelEnum::ITK_UCHAR;
+  static constexpr AtomicPixelEnum ITK_CHAR = AtomicPixelEnum::ITK_CHAR;
+  static constexpr AtomicPixelEnum ITK_USHORT = AtomicPixelEnum::ITK_USHORT;
+  static constexpr AtomicPixelEnum ITK_SHORT = AtomicPixelEnum::ITK_SHORT;
+  static constexpr AtomicPixelEnum ITK_UINT = AtomicPixelEnum::ITK_UINT;
+  static constexpr AtomicPixelEnum ITK_INT = AtomicPixelEnum::ITK_INT;
+  static constexpr AtomicPixelEnum ITK_ULONG = AtomicPixelEnum::ITK_ULONG;
+  static constexpr AtomicPixelEnum ITK_LONG = AtomicPixelEnum::ITK_LONG;
+  static constexpr AtomicPixelEnum ITK_FLOAT = AtomicPixelEnum::ITK_FLOAT;
+  static constexpr AtomicPixelEnum ITK_DOUBLE = AtomicPixelEnum::ITK_DOUBLE;
+#endif
+
 
   /** Convert the enumerated type to a string representation. */
   static std::string
-  AtomicPixelTypeToString(const AtomicPixelType pixelType);
+  AtomicPixelTypeToString(const AtomicPixelEnum pixelType);
 
   /** Calculate the size, in bytes, that the atomic pixel type occupies. */
   static unsigned int
-  ComputeSizeOfAtomicPixelType(const AtomicPixelType pixelType);
+  ComputeSizeOfAtomicPixelType(const AtomicPixelEnum pixelType);
 };
 
 extern ITKIOImageBase_EXPORT const char * const ITK_OnDiskStorageTypeName;

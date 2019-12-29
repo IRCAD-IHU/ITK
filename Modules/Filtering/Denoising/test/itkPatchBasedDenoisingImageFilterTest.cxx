@@ -118,7 +118,7 @@ doDenoising(const std::string & inputFileName,
   ITK_TEST_SET_GET_BOOLEAN(filter, UseFastTensorComputations, useFastTensorComputations);
 
   // Noise model to use
-  typename FilterType::NoiseModelType noiseModel;
+  typename FilterType::NoiseModelEnum noiseModel;
   if (noiseModelStr == "GAUSSIAN")
   {
     noiseModel = FilterType::GAUSSIAN;
@@ -136,7 +136,7 @@ doDenoising(const std::string & inputFileName,
     noiseModel = FilterType::NOMODEL;
   }
   filter->SetNoiseModel(noiseModel);
-  ITK_TEST_SET_GET_VALUE(noiseModel, filter->GetNoiseModel());
+  ITK_TEST_SET_GET_VALUE(itkExposeEnumValue(noiseModel), itkExposeEnumValue(filter->GetNoiseModel()));
 
   // Stepsize or weight for smoothing term
   double smoothingWeight = 1.0;

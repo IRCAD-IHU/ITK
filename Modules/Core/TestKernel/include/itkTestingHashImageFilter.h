@@ -91,16 +91,24 @@ public:
   DataObjectPointer
   MakeOutput(DataObjectPointerArraySizeType idx) override;
 
-  enum HashFunction
+  /**\class HashFunctionEnum
+   * \ingroup ITKTestKernel
+   * Describes the hash function
+   */
+  enum class HashFunctionEnum : u_int8_t
   {
     MD5
   };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr HashFunctionEnum MD5 = HashFunctionEnum::MD5;
+#endif
 
   /** Set/Get The hash function type. Currently only MD5 is supported
    * and this value is ignores.
    */
-  itkSetMacro(HashFunction, HashFunction);
-  itkGetMacro(HashFunction, HashFunction);
+  itkSetEnumMacro(HashFunction, HashFunctionEnum);
+  itkGetMacro(HashFunction, HashFunctionEnum);
 
 protected:
   HashImageFilter();
@@ -132,7 +140,7 @@ protected:
   EnlargeOutputRequestedRegion(DataObject * data) override;
 
 private:
-  HashFunction m_HashFunction;
+  HashFunctionEnum m_HashFunction;
 };
 
 } // end namespace Testing

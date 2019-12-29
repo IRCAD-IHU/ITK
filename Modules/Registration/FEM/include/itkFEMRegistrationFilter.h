@@ -146,11 +146,20 @@ public:
   using LinearSystemSolverType = LinearSystemWrapperItpack;
   using SolverType = SolverCrankNicolson<ImageDimension>;
 
-  enum Sign
+  /**\class Sign
+   *\ingroup ITKFEMRegistration*/
+  enum class SignEnum : int8_t
   {
     positive = 1,
     negative = -1
   };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr SignEnum positive = SignEnum::positive;
+  static constexpr SignEnum negative = SignEnum::negative;
+#endif
+
+
   using Float = double;
   using LoadArray = Load::ArrayType;
 
@@ -673,7 +682,7 @@ private:
   bool          m_UseNormalizedGradient;
   bool          m_CreateMeshFromImage;
   unsigned int  m_EmployRegridding;
-  Sign          m_DescentDirection;
+  SignEnum      m_DescentDirection;
   Float         m_EnergyReductionFactor;
   ImageSizeType m_FullImageSize;
   ImageSizeType m_ImageOrigin;

@@ -155,8 +155,9 @@ public:
   itkSetMacro(Range, int);
   itkGetConstMacro(Range, int);
 
-  // full segment or half segment direction
-  enum SIDE
+  /**\class SIDEEnum
+   * \ingroup ITKDeformableMesh*/
+  enum class SIDEEnum : uint8_t
   {
     // half segment in direction
     NORMAL,
@@ -165,6 +166,12 @@ public:
     // complete segment
     BOTH
   };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr SIDEEnum NORMAL = SIDEEnum::NORMAL;
+  static constexpr SIDEEnum INVERSE = SIDEEnum::INVERSE;
+  static constexpr SIDEEnum BOTH = SIDEEnum::BOTH;
+#endif
 
   /**
    * Set Original image

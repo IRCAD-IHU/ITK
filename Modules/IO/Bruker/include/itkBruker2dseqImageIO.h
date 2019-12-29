@@ -138,8 +138,8 @@ private:
   void
   SwapBytesIfNecessary(void * buffer, SizeValueType numberOfPixels);
 
-  ImageIOBase::IOComponentType m_OnDiskComponentType{ UCHAR };
-  ImageIOBase::ByteOrder       m_MachineByteOrder;
+  IOComponentEnum m_OnDiskComponentType{ IOComponentEnum::UCHAR };
+  ByteOrderEnum   m_MachineByteOrder;
 };
 
 } // end namespace itk

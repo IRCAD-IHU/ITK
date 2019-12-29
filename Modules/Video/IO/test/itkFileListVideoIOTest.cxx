@@ -201,7 +201,7 @@ test_FileListVideoIO(const char *  input,
   std::vector<itk::SizeValueType> size;
   size.push_back(width);
   size.push_back(height);
-  fileListIO->SetWriterParameters(fps, size, fourCC, nChannels, itk::ImageIOBase::UCHAR);
+  fileListIO->SetWriterParameters(fps, size, fourCC, nChannels, itk::IOComponentEnum::UCHAR);
 
   // Make sure they set correctly
   if (itk::Math::NotExactlyEquals(fileListIO->GetFramesPerSecond(), fps) || fileListIO->GetDimensions(0) != width ||

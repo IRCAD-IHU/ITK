@@ -188,13 +188,25 @@ public:
   /** Weights type for the optimizer. */
   using OptimizerWeightsType = typename OptimizerType::ScalesType;
 
-  /** enum type for metric sampling strategy */
-  enum MetricSamplingStrategyType
+  /** \class MetricSamplingStrategyEnum
+   * \brief enum type for metric sampling strategy
+   *
+   * \ingroup ITKRegistrationMethodsv4 */
+  enum class MetricSamplingStrategyEnum : uint8_t
   {
     NONE,
     REGULAR,
     RANDOM
   };
+
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  using MetricSamplingStrategyType = MetricSamplingStrategyEnum;
+  static constexpr MetricSamplingStrategyEnum NONE = MetricSamplingStrategyEnum::NONE;
+  static constexpr MetricSamplingStrategyEnum REGULAR = MetricSamplingStrategyEnum::REGULAR;
+  static constexpr MetricSamplingStrategyEnum RANDOM = MetricSamplingStrategyEnum::RANDOM;
+#endif
+
 
   using MetricSamplePointSetType = typename ImageMetricType::FixedSampledPointSetType;
 
@@ -279,8 +291,8 @@ public:
   itkGetModifiableObjectMacro(Metric, MetricType);
 
   /** Set/Get the metric sampling strategy. */
-  itkSetMacro(MetricSamplingStrategy, MetricSamplingStrategyType);
-  itkGetConstMacro(MetricSamplingStrategy, MetricSamplingStrategyType);
+  itkSetEnumMacro(MetricSamplingStrategy, MetricSamplingStrategyEnum);
+  itkGetEnumMacro(MetricSamplingStrategy, MetricSamplingStrategyEnum);
 
   /** Reinitialize the seed for the random number generators that
    * select the samples for some metric sampling strategies.
@@ -528,7 +540,7 @@ protected:
   bool                 m_OptimizerWeightsAreIdentity;
 
   MetricPointer                                       m_Metric;
-  MetricSamplingStrategyType                          m_MetricSamplingStrategy;
+  MetricSamplingStrategyEnum                          m_MetricSamplingStrategy;
   MetricSamplingPercentageArrayType                   m_MetricSamplingPercentagePerLevel;
   SizeValueType                                       m_NumberOfMetrics;
   int                                                 m_FirstImageMetricIndex;

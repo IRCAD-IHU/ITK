@@ -99,11 +99,11 @@ itkDiscreteHessianGaussianImageFunctionTestND(int argc, char * argv[])
   bool useImageSpacing = true;
   ITK_TEST_SET_GET_BOOLEAN(function, UseImageSpacing, useImageSpacing);
 
-  typename HessianGaussianImageFunctionType::InterpolationModeType interpolationMode =
+  typename HessianGaussianImageFunctionType::InterpolationModeEnum interpolationMode =
     HessianGaussianImageFunctionType::NearestNeighbourInterpolation;
 
   function->SetInterpolationMode(interpolationMode);
-  ITK_TEST_SET_GET_VALUE(interpolationMode, function->GetInterpolationMode());
+  ITK_TEST_SET_GET_VALUE(itkExposeEnumValue(interpolationMode), itkExposeEnumValue(function->GetInterpolationMode()));
 
 
   function->Initialize();

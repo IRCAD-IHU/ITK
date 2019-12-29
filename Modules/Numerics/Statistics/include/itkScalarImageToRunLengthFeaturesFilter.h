@@ -123,7 +123,7 @@ public:
 
   using RunLengthFeaturesFilterType = HistogramToRunLengthFeaturesFilter<HistogramType>;
 
-  using RunLengthFeatureName = short;
+  using RunLengthFeatureName = typename RunLengthFeaturesFilterType::RunLengthFeatureEnum;
   using FeatureNameVector = VectorContainer<unsigned char, RunLengthFeatureName>;
   using FeatureNameVectorPointer = typename FeatureNameVector::Pointer;
   using FeatureNameVectorConstPointer = typename FeatureNameVector::ConstPointer;

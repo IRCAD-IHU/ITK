@@ -363,27 +363,27 @@ LBFGS2Optimizerv4::GetMaximumIterations() const
 // this translation is kind of annoying and error prone
 // but avoids exposing lbfgs.h
 void
-LBFGS2Optimizerv4::SetLineSearch(const LBFGS2Optimizerv4::LineSearchMethod & linesearch)
+LBFGS2Optimizerv4::SetLineSearch(const LBFGS2Optimizerv4::LineSearchMethodEnum & linesearch)
 {
   //
-  int lbfgsLineSearch = LINESEARCH_DEFAULT;
-  if (linesearch == LINESEARCH_BACKTRACKING)
+  int lbfgsLineSearch = LBFGS_LINESEARCH_DEFAULT;
+  if (linesearch == LineSearchMethodEnum::LINESEARCH_BACKTRACKING)
   {
     lbfgsLineSearch = LBFGS_LINESEARCH_BACKTRACKING;
   }
-  else if (linesearch == LINESEARCH_BACKTRACKING_ARMIJO)
+  else if (linesearch == LineSearchMethodEnum::LINESEARCH_BACKTRACKING_ARMIJO)
   {
     lbfgsLineSearch = LBFGS_LINESEARCH_BACKTRACKING_ARMIJO;
   }
-  else if (linesearch == LINESEARCH_BACKTRACKING_WOLFE)
+  else if (linesearch == LineSearchMethodEnum::LINESEARCH_BACKTRACKING_WOLFE)
   {
     lbfgsLineSearch = LBFGS_LINESEARCH_BACKTRACKING_WOLFE;
   }
-  else if (linesearch == LINESEARCH_BACKTRACKING_STRONG_WOLFE)
+  else if (linesearch == LineSearchMethodEnum::LINESEARCH_BACKTRACKING_STRONG_WOLFE)
   {
     lbfgsLineSearch = LBFGS_LINESEARCH_BACKTRACKING_STRONG_WOLFE;
   }
-  else if (linesearch == LINESEARCH_MORETHUENTE)
+  else if (linesearch == LineSearchMethodEnum::LINESEARCH_MORETHUENTE)
   {
     lbfgsLineSearch = LBFGS_LINESEARCH_MORETHUENTE;
   }
@@ -392,30 +392,30 @@ LBFGS2Optimizerv4::SetLineSearch(const LBFGS2Optimizerv4::LineSearchMethod & lin
   this->Modified();
 }
 
-LBFGS2Optimizerv4::LineSearchMethod
+LBFGS2Optimizerv4::LineSearchMethodEnum
 LBFGS2Optimizerv4::GetLineSearch() const
 {
-  LineSearchMethod linesearch = LINESEARCH_DEFAULT;
-  int              lbfgsLineSearch = m_Pimpl->m_Parameters.linesearch;
+  LineSearchMethodEnum linesearch = LineSearchMethodEnum::LINESEARCH_DEFAULT;
+  int                  lbfgsLineSearch = m_Pimpl->m_Parameters.linesearch;
   if (lbfgsLineSearch == LBFGS_LINESEARCH_BACKTRACKING)
   {
-    linesearch = LINESEARCH_BACKTRACKING;
+    linesearch = LineSearchMethodEnum::LINESEARCH_BACKTRACKING;
   }
   else if (lbfgsLineSearch == LBFGS_LINESEARCH_BACKTRACKING_ARMIJO)
   {
-    linesearch = LINESEARCH_BACKTRACKING_ARMIJO;
+    linesearch = LineSearchMethodEnum::LINESEARCH_BACKTRACKING_ARMIJO;
   }
   else if (lbfgsLineSearch == LBFGS_LINESEARCH_BACKTRACKING_WOLFE)
   {
-    linesearch = LINESEARCH_BACKTRACKING_WOLFE;
+    linesearch = LineSearchMethodEnum::LINESEARCH_BACKTRACKING_WOLFE;
   }
   else if (lbfgsLineSearch == LBFGS_LINESEARCH_BACKTRACKING_STRONG_WOLFE)
   {
-    linesearch = LINESEARCH_BACKTRACKING_STRONG_WOLFE;
+    linesearch = LineSearchMethodEnum::LINESEARCH_BACKTRACKING_STRONG_WOLFE;
   }
   else if (lbfgsLineSearch == LBFGS_LINESEARCH_MORETHUENTE)
   {
-    linesearch = LINESEARCH_MORETHUENTE;
+    linesearch = LineSearchMethodEnum::LINESEARCH_MORETHUENTE;
   }
 
   return linesearch;

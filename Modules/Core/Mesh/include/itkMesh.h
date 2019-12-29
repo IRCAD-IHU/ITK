@@ -144,24 +144,25 @@ public:
   using MeshTraits = TMeshTraits;
   using PixelType = typename MeshTraits::PixelType;
   using CellPixelType = typename MeshTraits::CellPixelType;
+  using MeshClassCellsAllocationMethodEnum = itk::MeshClassCellsAllocationMethodEnum;
 
   /** Convenient constants obtained from TMeshTraits template parameter. */
   static constexpr unsigned int PointDimension = TMeshTraits::PointDimension;
   static constexpr unsigned int MaxTopologicalDimension = TMeshTraits::MaxTopologicalDimension;
 
-  /** Enables backwards compatibility for enum values */
-  using CellsAllocationMethodType = MeshClassCellsAllocationMethodEnum;
 #if !defined(ITK_LEGACY_REMOVE)
+  using CellsAllocationMethodType = MeshClassCellsAllocationMethodEnum;
+  /** Enables backwards compatibility for enum values */
   // We need to expose the enum values at the class level
   // for backwards compatibility
   static constexpr CellsAllocationMethodType CellsAllocationMethodUndefined =
-    CellsAllocationMethodType::CellsAllocationMethodUndefined;
+    MeshClassCellsAllocationMethodEnum::CellsAllocationMethodUndefined;
   static constexpr CellsAllocationMethodType CellsAllocatedAsStaticArray =
-    CellsAllocationMethodType::CellsAllocatedAsStaticArray;
+    MeshClassCellsAllocationMethodEnum::CellsAllocatedAsStaticArray;
   static constexpr CellsAllocationMethodType CellsAllocatedAsADynamicArray =
-    CellsAllocationMethodType::CellsAllocatedAsADynamicArray;
+    MeshClassCellsAllocationMethodEnum::CellsAllocatedAsADynamicArray;
   static constexpr CellsAllocationMethodType CellsAllocatedDynamicallyCellByCell =
-    CellsAllocationMethodType::CellsAllocatedDynamicallyCellByCell;
+    MeshClassCellsAllocationMethodEnum::CellsAllocatedDynamicallyCellByCell;
 #endif
 
   /** Convenient type alias obtained from TMeshTraits template parameter. */
@@ -478,8 +479,8 @@ public:
       \warning Failure to call this method correctly will lead to memory leaks
       and/or segmentation faults because the cell memory will not be erased or
       will be erased with an improper method.  */
-  itkSetMacro(CellsAllocationMethod, CellsAllocationMethodType);
-  itkGetConstReferenceMacro(CellsAllocationMethod, CellsAllocationMethodType);
+  itkSetMacro(CellsAllocationMethod, MeshClassCellsAllocationMethodEnum);
+  itkGetConstReferenceMacro(CellsAllocationMethod, MeshClassCellsAllocationMethodEnum);
 
 protected:
   /** Constructor for use by New() method. */
@@ -499,7 +500,7 @@ protected:
   BoundingBoxPointer m_BoundingBox;
 
 private:
-  CellsAllocationMethodType m_CellsAllocationMethod;
+  MeshClassCellsAllocationMethodEnum m_CellsAllocationMethod;
 }; // End Class: Mesh
 
 /** Define how to print enumeration */

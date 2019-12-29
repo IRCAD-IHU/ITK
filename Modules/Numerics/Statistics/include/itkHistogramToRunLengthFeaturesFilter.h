@@ -165,8 +165,10 @@ public:
 
   itkGetMacro(TotalNumberOfRuns, unsigned long);
 
-  /** Run-length feature types */
-  typedef enum
+  /**\class RunLengthFeatureEnum
+   * \ingroup ITKStatistics
+   * Run-length feature types */
+  enum class RunLengthFeatureEnum : uint8_t
   {
     ShortRunEmphasis,
     LongRunEmphasis,
@@ -178,11 +180,27 @@ public:
     ShortRunHighGreyLevelEmphasis,
     LongRunLowGreyLevelEmphasis,
     LongRunHighGreyLevelEmphasis
-  } RunLengthFeatureName;
+  };
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr RunLengthFeatureEnum ShortRunEmphasis = RunLengthFeatureEnum::ShortRunEmphasis;
+  static constexpr RunLengthFeatureEnum LongRunEmphasis = RunLengthFeatureEnum::LongRunEmphasis;
+  static constexpr RunLengthFeatureEnum GreyLevelNonuniformity = RunLengthFeatureEnum::GreyLevelNonuniformity;
+  static constexpr RunLengthFeatureEnum RunLengthNonuniformity = RunLengthFeatureEnum::RunLengthNonuniformity;
+  static constexpr RunLengthFeatureEnum LowGreyLevelRunEmphasis = RunLengthFeatureEnum::LowGreyLevelRunEmphasis;
+  static constexpr RunLengthFeatureEnum HighGreyLevelRunEmphasis = RunLengthFeatureEnum::HighGreyLevelRunEmphasis;
+  static constexpr RunLengthFeatureEnum ShortRunLowGreyLevelEmphasis =
+    RunLengthFeatureEnum::ShortRunLowGreyLevelEmphasis;
+  static constexpr RunLengthFeatureEnum ShortRunHighGreyLevelEmphasis =
+    RunLengthFeatureEnum::ShortRunHighGreyLevelEmphasis;
+  static constexpr RunLengthFeatureEnum LongRunLowGreyLevelEmphasis = RunLengthFeatureEnum::LongRunLowGreyLevelEmphasis;
+  static constexpr RunLengthFeatureEnum LongRunHighGreyLevelEmphasis =
+    RunLengthFeatureEnum::LongRunHighGreyLevelEmphasis;
+#endif
 
   /** convenience method to access the run length values */
   MeasurementType
-  GetFeature(RunLengthFeatureName name);
+  GetFeature(RunLengthFeatureEnum name);
 
 protected:
   HistogramToRunLengthFeaturesFilter();

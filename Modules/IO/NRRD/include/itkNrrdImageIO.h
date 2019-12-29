@@ -103,9 +103,9 @@ protected:
   /** Utility functions for converting between enumerated data type
       representations */
   int
-  ITKToNrrdComponentType(const ImageIOBase::IOComponentType) const;
+  ITKToNrrdComponentType(const IOComponentEnum) const;
 
-  ImageIOBase::IOComponentType
+  IOComponentEnum
   NrrdToITKComponentType(const int) const;
 
   const NrrdEncoding_t * m_NrrdCompressionEncoding{ nullptr };
